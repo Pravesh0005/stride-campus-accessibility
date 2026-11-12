@@ -1,3 +1,0 @@
-fix(explore): resolve dropdown select icon alignment and prevent text clipping
-
-Co-authored-by: Neha Sharma <neha.sharma22@lpu.in>
