@@ -1,0 +1,1274 @@
+export const buildings = [
+  {
+    id: "block-1",
+    slug: "block-1",
+    name: "Block 1 (Admission & Central Admin)",
+    shortName: "Block 1",
+    type: "administrative",
+    floors: 4,
+    coordinates: { x: 50, y: 8 },
+    accessibility: {
+      score: 85,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: true
+    },
+    description: "Main administrative headquarters, Vice Chancellor secretariat, admissions counseling halls, and visitor facilitation centre.",
+    barriers: ["Heavy manual double doors at rear entrance"],
+    image: null
+  },
+  {
+    id: "block-2",
+    slug: "block-2",
+    name: "Block 2 (Division of Student Welfare - DSW)",
+    shortName: "Block 2",
+    type: "administrative",
+    floors: 4,
+    coordinates: { x: 42, y: 12 },
+    accessibility: {
+      score: 80,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Hub for student clubs, cultural councils, scholarship desks, NCC/NSS cells, and student grievance redresal.",
+    barriers: ["Threshold ramp slope exceeds 1:10 at west annex"],
+    image: null
+  },
+  {
+    id: "block-3",
+    slug: "block-3",
+    name: "Block 3 (Civil Engineering)",
+    shortName: "Block 3",
+    type: "academic",
+    floors: 5,
+    coordinates: { x: 32, y: 14 },
+    accessibility: {
+      score: 65,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Concrete testing labs, surveying studios, environmental engineering facilities, and departmental lecture theaters.",
+    barriers: ["Heavy materials lab in basement has stair-only access"],
+    image: null
+  },
+  {
+    id: "block-4",
+    slug: "block-4",
+    name: "Block 4 (Mechanical & Mechatronics)",
+    shortName: "Block 4",
+    type: "academic",
+    floors: 5,
+    coordinates: { x: 24, y: 16 },
+    accessibility: {
+      score: 58,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: false,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Robotics test-beds, CAD/CAM simulation stations, thermodynamics laboratories, and faculty offices.",
+    barriers: ["Service elevator down for annual maintenance", "Threshold step at main workshop corridor"],
+    image: null
+  },
+  {
+    id: "block-13",
+    slug: "block-13",
+    name: "Block 13 (Engineering Central Workshops)",
+    shortName: "Block 13",
+    type: "academic",
+    floors: 3,
+    coordinates: { x: 18, y: 24 },
+    accessibility: {
+      score: 48,
+      ramp: true,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: false,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Heavy carpentry, welding, foundry, fitting shops, and industrial fabrication bays.",
+    barriers: ["Crushed gravel pathway at heavy equipment delivery bay", "High 4-inch metal kerb at lathe workshop"],
+    image: null
+  },
+  {
+    id: "block-14",
+    slug: "block-14",
+    name: "Block 14 (Automobile & Aerospace Labs)",
+    shortName: "Block 14",
+    type: "academic",
+    floors: 3,
+    coordinates: { x: 14, y: 30 },
+    accessibility: {
+      score: 52,
+      ramp: true,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Formula student team garages, wind tunnel simulation room, and internal combustion engine testing bays.",
+    barriers: ["Steep approach slope from vehicle testing track"],
+    image: null
+  },
+  {
+    id: "block-25",
+    slug: "block-25",
+    name: "Block 25 (School of Pharmaceutical Sciences)",
+    shortName: "Block 25",
+    type: "academic",
+    floors: 5,
+    coordinates: { x: 68, y: 15 },
+    accessibility: {
+      score: 82,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: true
+    },
+    description: "Pharmacology testing labs, sterile preparation suites, clean rooms, and medicinal chemistry facilities.",
+    barriers: ["Fire safety doors between corridors require high opening force"],
+    image: null
+  },
+  {
+    id: "block-26",
+    slug: "block-26",
+    name: "Block 26 (School of Bioengineering & Biosciences)",
+    shortName: "Block 26",
+    type: "academic",
+    floors: 5,
+    coordinates: { x: 76, y: 18 },
+    accessibility: {
+      score: 79,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Genetics laboratories, microbiology clean-benches, bioinformatics suites, and tissue culture units.",
+    barriers: ["Basement autoclave room lacks ramp access"],
+    image: null
+  },
+  {
+    id: "block-27",
+    slug: "block-27",
+    name: "Block 27 (Agricultural Polyhouses & Soil Labs)",
+    shortName: "Block 27",
+    type: "academic",
+    floors: 2,
+    coordinates: { x: 86, y: 22 },
+    accessibility: {
+      score: 42,
+      ramp: false,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: false,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Agronomy research fields, climate-controlled polyhouses, and soil microbiology stations.",
+    barriers: ["Unpaved earthen pathways between polyhouses", "High mud kerbs around sprinkler perimeter"],
+    image: null
+  },
+  {
+    id: "block-28",
+    slug: "block-28",
+    name: "Block 28 (School of Agriculture)",
+    shortName: "Block 28",
+    type: "academic",
+    floors: 4,
+    coordinates: { x: 82, y: 28 },
+    accessibility: {
+      score: 68,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Horticulture seminar halls, entomology specimen galleries, and agricultural extension offices.",
+    barriers: ["South entrance ramp has uneven stone tiles"],
+    image: null
+  },
+  {
+    id: "block-29",
+    slug: "block-29",
+    name: "Block 29 (Chemical Sciences & Physics)",
+    shortName: "Block 29",
+    type: "academic",
+    floors: 5,
+    coordinates: { x: 62, y: 22 },
+    accessibility: {
+      score: 74,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Organic synthesis hoods, spectroscopy instrumentation rooms, and undergraduate optics labs.",
+    barriers: ["Lab benches fixed at 36-inch height without adjustable stations"],
+    image: null
+  },
+  {
+    id: "block-30",
+    slug: "block-30",
+    name: "Block 30 (Central Library Resource Centre)",
+    shortName: "Central Library",
+    type: "library",
+    floors: 5,
+    coordinates: { x: 50, y: 24 },
+    accessibility: {
+      score: 92,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: true
+    },
+    description: "Multi-story university central library, quiet reading zones, digital reference terminals, and audio-book facilities.",
+    barriers: ["Side ramp near garden has 1:8 steep gradient"],
+    image: null
+  },
+  {
+    id: "block-31",
+    slug: "block-31",
+    name: "Block 31 (School of Polytechnic)",
+    shortName: "Block 31",
+    type: "academic",
+    floors: 4,
+    coordinates: { x: 38, y: 24 },
+    accessibility: {
+      score: 70,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Diploma engineering lectures, technical drawing studios, and electronics hardware workstations.",
+    barriers: ["Staircase handrail loose on third floor flight"],
+    image: null
+  },
+  {
+    id: "block-32",
+    slug: "block-32",
+    name: "Block 32 (Mittal School of Business)",
+    shortName: "Block 32 (Business)",
+    type: "academic",
+    floors: 5,
+    coordinates: { x: 38, y: 34 },
+    accessibility: {
+      score: 86,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: false
+    },
+    description: "MBA lecture halls, executive boardroom simulations, trading floor lab, and corporate placement conference halls.",
+    barriers: ["Auditorium tier seating lacks wheelchair parking spots"],
+    image: null
+  },
+  {
+    id: "block-33",
+    slug: "block-33",
+    name: "Block 33 (School of Hotel Management & Tourism)",
+    shortName: "Block 33 (Hotel Mgmt)",
+    type: "academic",
+    floors: 4,
+    coordinates: { x: 28, y: 34 },
+    accessibility: {
+      score: 76,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Training kitchens, bakery studios, mock hotel suites, and international beverage demo rooms.",
+    barriers: ["Commercial training kitchen doors have raised floor sills"],
+    image: null
+  },
+  {
+    id: "block-34",
+    slug: "block-34",
+    name: "Block 34 (School of Computer Science & Engineering)",
+    shortName: "Block 34 (CSE)",
+    type: "academic",
+    floors: 8,
+    coordinates: { x: 48, y: 36 },
+    accessibility: {
+      score: 84,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: true
+    },
+    description: "Primary hub for CSE/IT students, advanced computing clusters, data science labs, and smart seminar halls.",
+    barriers: ["Elevators experience heavy crowding during 10-minute class transitions"],
+    image: null
+  },
+  {
+    id: "block-35",
+    slug: "block-35",
+    name: "Block 35 (School of Architecture & Planning)",
+    shortName: "Block 35 (Arch)",
+    type: "academic",
+    floors: 4,
+    coordinates: { x: 58, y: 34 },
+    accessibility: {
+      score: 80,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Drafting studios, architectural modeling workshops, laser cutting suites, and urban design display halls.",
+    barriers: ["Exhibition mezzanine level accessible only via spiral steps"],
+    image: null
+  },
+  {
+    id: "block-36",
+    slug: "block-36",
+    name: "Block 36 (School of Law)",
+    shortName: "Block 36 (Law)",
+    type: "academic",
+    floors: 5,
+    coordinates: { x: 68, y: 35 },
+    accessibility: {
+      score: 82,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: false
+    },
+    description: "Moot court arenas, legal aid clinic, jurisprudence research library, and faculty chambers.",
+    barriers: ["Moot court judge podium is elevated by 2 steps without ramp"],
+    image: null
+  },
+  {
+    id: "block-37",
+    slug: "block-37",
+    name: "Block 37 (School of Education & Humanities)",
+    shortName: "Block 37",
+    type: "academic",
+    floors: 4,
+    coordinates: { x: 74, y: 38 },
+    accessibility: {
+      score: 72,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Psychology labs, pedagogy lecture halls, linguistics audio-visual studios, and research rooms.",
+    barriers: ["No dedicated disabled washroom on 3rd and 4th floors"],
+    image: null
+  },
+  {
+    id: "block-38",
+    slug: "block-38",
+    name: "Block 38 (Examination Department & Records)",
+    shortName: "Block 38 (Exams)",
+    type: "administrative",
+    floors: 4,
+    coordinates: { x: 82, y: 40 },
+    accessibility: {
+      score: 78,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Degree verification counters, transcript dispatch cell, examination control room, and confidential archives.",
+    barriers: ["Student grievance counter height exceeds wheelchair reach"],
+    image: null
+  },
+  {
+    id: "block-55",
+    slug: "block-55",
+    name: "Block 55 (Artificial Intelligence & Computing Wing)",
+    shortName: "Block 55 (AI Wing)",
+    type: "academic",
+    floors: 6,
+    coordinates: { x: 44, y: 44 },
+    accessibility: {
+      score: 94,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: true
+    },
+    description: "Newly constructed computing hub with automatic motion-sensing doors, wide elevators, and step-free lecture complexes.",
+    barriers: [],
+    image: null
+  },
+  {
+    id: "block-56",
+    slug: "block-56",
+    name: "Block 56 (Liberal Arts & Foreign Languages)",
+    shortName: "Block 56",
+    type: "academic",
+    floors: 5,
+    coordinates: { x: 54, y: 44 },
+    accessibility: {
+      score: 88,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: false
+    },
+    description: "Language training labs, foreign language cultural centers, media broadcast studios, and creative writing rooms.",
+    barriers: ["Soundproofing heavy double doors at recording studio"],
+    image: null
+  },
+  {
+    id: "unimall",
+    slug: "unimall",
+    name: "UniMall (Central Student Utility & Retail Complex)",
+    shortName: "UniMall",
+    type: "dining",
+    floors: 4,
+    coordinates: { x: 48, y: 52 },
+    accessibility: {
+      score: 86,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: true
+    },
+    description: "4-story commercial hub featuring food chains, grocery mart, stationery printers, banking, and apparel outlets.",
+    barriers: ["Basement parking ramp frequently blocked by delivery cages"],
+    image: null
+  },
+  {
+    id: "unipolis",
+    slug: "unipolis",
+    name: "Baldev Raj Mittal Unipolis",
+    shortName: "Unipolis",
+    type: "recreation",
+    floors: 1,
+    coordinates: { x: 38, y: 52 },
+    accessibility: {
+      score: 88,
+      ramp: true,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: false
+    },
+    description: "Massive covered open-air event arena with 10,000+ seating capacity for youth festivals, tech conclaves, and convocations.",
+    barriers: ["Temporary cables crossing pathway during major concerts"],
+    image: null
+  },
+  {
+    id: "shanti-devi-auditorium",
+    slug: "shanti-devi-auditorium",
+    name: "Shanti Devi Mittal Auditorium",
+    shortName: "Auditorium",
+    type: "recreation",
+    floors: 3,
+    coordinates: { x: 30, y: 48 },
+    accessibility: {
+      score: 80,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "2,500-seat state-of-the-art air-conditioned auditorium hosting international conventions and performing arts.",
+    barriers: ["Stage area lacks dedicated wheelchair lift from auditorium floor"],
+    image: null
+  },
+  {
+    id: "uni-hospital",
+    slug: "uni-hospital",
+    name: "Uni-Hospital (24/7 University Health Centre)",
+    shortName: "Uni-Hospital",
+    type: "medical",
+    floors: 3,
+    coordinates: { x: 62, y: 52 },
+    accessibility: {
+      score: 96,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: true
+    },
+    description: "Round-the-clock emergency hospital, physiotherapy rehabilitation wing, diagnostics lab, and pharmacy.",
+    barriers: [],
+    image: null
+  },
+  {
+    id: "indoor-stadium",
+    slug: "indoor-stadium",
+    name: "Indoor Sports Complex & Olympic Pool",
+    shortName: "Indoor Sports",
+    type: "recreation",
+    floors: 2,
+    coordinates: { x: 22, y: 58 },
+    accessibility: {
+      score: 72,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Multi-court badminton halls, squash courts, gymnasium, table tennis arenas, and all-weather swimming pool.",
+    barriers: ["Swimming pool lacks mechanical hydraulic hoist for wheelchair entry"],
+    image: null
+  },
+  {
+    id: "outdoor-stadium",
+    slug: "outdoor-stadium",
+    name: "Multi-Purpose Athletics Stadium",
+    shortName: "Athletics Stadium",
+    type: "recreation",
+    floors: 1,
+    coordinates: { x: 14, y: 64 },
+    accessibility: {
+      score: 55,
+      ramp: true,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "400m synthetic running track, football turf, cricket nets, and spectators pavilion.",
+    barriers: ["Paved track ends abruptly at muddy bleacher entrance"],
+    image: null
+  },
+  {
+    id: "sunken-garden",
+    slug: "sunken-garden",
+    name: "Sunken Garden & Central Lawn",
+    shortName: "Sunken Garden",
+    type: "recreation",
+    floors: 1,
+    coordinates: { x: 42, y: 40 },
+    accessibility: {
+      score: 62,
+      ramp: true,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: false,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Tiered landscaping, water fountains, and open grass gathering zone between Blocks 32 and 34.",
+    barriers: ["Stepped amphitheater seating with steep ramp on north side only"],
+    image: null
+  },
+  {
+    id: "open-air-theatre",
+    slug: "open-air-theatre",
+    name: "Open Air Theatre (OAT)",
+    shortName: "OAT",
+    type: "recreation",
+    floors: 1,
+    coordinates: { x: 72, y: 46 },
+    accessibility: {
+      score: 50,
+      ramp: false,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: false,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Outdoor stepped arena for street theater, club flash-mobs, and student music sessions.",
+    barriers: ["Completely stepped stone amphitheater, zero wheelchair ramp"],
+    image: null
+  },
+  {
+    id: "student-food-court",
+    slug: "student-food-court",
+    name: "Student Food Court (Block 34 Plaza)",
+    shortName: "Food Court 34",
+    type: "dining",
+    floors: 2,
+    coordinates: { x: 52, y: 38 },
+    accessibility: {
+      score: 82,
+      ramp: true,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Outdoor and indoor dining plaza housing multiple food kiosks, juice counters, and bakery points.",
+    barriers: ["Mezzanine seating floor has spiral stairs without elevator"],
+    image: null
+  },
+  {
+    id: "robopark",
+    slug: "robopark",
+    name: "Robopark & Innovation Pavilion",
+    shortName: "Robopark",
+    type: "academic",
+    floors: 2,
+    coordinates: { x: 40, y: 48 },
+    accessibility: {
+      score: 85,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: false
+    },
+    description: "Autonomous drone flight cages, student robotic competition arena, and technology display pavilion.",
+    barriers: [],
+    image: null
+  },
+  {
+    id: "gate-1",
+    slug: "gate-1",
+    name: "Main Gate 1 (GT Road National Highway Entrance)",
+    shortName: "Main Gate 1",
+    type: "administrative",
+    floors: 1,
+    coordinates: { x: 50, y: 2 },
+    accessibility: {
+      score: 90,
+      ramp: true,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: true
+    },
+    description: "Primary official entrance facing NH-1 / GT Road with security checkpoints, visitor pass desks, and shuttle pickup stands.",
+    barriers: ["Traffic boom barriers require manual pedestrian clearance"],
+    image: null
+  },
+  {
+    id: "gate-2",
+    slug: "gate-2",
+    name: "Gate 2 (Law Gate Commercial Hub)",
+    shortName: "Gate 2 (Law Gate)",
+    type: "administrative",
+    floors: 1,
+    coordinates: { x: 72, y: 30 },
+    accessibility: {
+      score: 60,
+      ramp: true,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "High-density student gate connecting to off-campus food joints, student housing, and local transport.",
+    barriers: ["Broken asphalt and high kerb at pedestrian turnstile"],
+    image: null
+  },
+  {
+    id: "gate-3",
+    slug: "gate-3",
+    name: "Gate 3 (Hostel & Sports Zone Gate)",
+    shortName: "Gate 3",
+    type: "administrative",
+    floors: 1,
+    coordinates: { x: 10, y: 52 },
+    accessibility: {
+      score: 70,
+      ramp: true,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "West perimeter gate used by student logistics, sports teams, and hostel shuttle services.",
+    barriers: ["Speed breakers are steep and lack painted contrast markings"],
+    image: null
+  },
+  {
+    id: "gate-4",
+    slug: "gate-4",
+    name: "Gate 4 (East Agricultural Perimeter Gate)",
+    shortName: "Gate 4",
+    type: "administrative",
+    floors: 1,
+    coordinates: { x: 92, y: 40 },
+    accessibility: {
+      score: 52,
+      ramp: false,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Rear access gate for agricultural machinery, farm supplies, and staff residential access.",
+    barriers: ["Unpaved roadside shoulder with drainage trench"],
+    image: null
+  },
+  {
+    id: "shuttle-terminal",
+    slug: "shuttle-terminal",
+    name: "Central E-Rickshaw & Shuttle Terminal",
+    shortName: "Shuttle Terminal",
+    type: "administrative",
+    floors: 1,
+    coordinates: { x: 50, y: 15 },
+    accessibility: {
+      score: 88,
+      ramp: true,
+      elevator: false,
+      elevatorWorking: false,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: false
+    },
+    description: "Central fleet depot for university electric rickshaws and wheelchair-accessible intra-campus shuttles.",
+    barriers: ["Boarding platforms lack raised tactile curb edge warnings"],
+    image: null
+  },
+  {
+    id: "bh-1",
+    slug: "bh-1",
+    name: "Boys Hostel 1 (BH-1)",
+    shortName: "BH-1",
+    type: "residential",
+    floors: 6,
+    coordinates: { x: 26, y: 64 },
+    accessibility: {
+      score: 55,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Student residential facility with in-house mess, study room, gym, and laundry services.",
+    barriers: ["Doorways to individual dorm rooms are 28 inches (narrow for standard wheelchairs)", "Bathroom threshold has 2-inch kerb"],
+    image: null
+  },
+  {
+    id: "bh-2",
+    slug: "bh-2",
+    name: "Boys Hostel 2 (BH-2)",
+    shortName: "BH-2",
+    type: "residential",
+    floors: 6,
+    coordinates: { x: 32, y: 64 },
+    accessibility: {
+      score: 58,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: false,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Senior undergraduate residence block with recreational courts and indoor dining hall.",
+    barriers: ["Mess hall counter height is high without lowered tray slides"],
+    image: null
+  },
+  {
+    id: "bh-3",
+    slug: "bh-3",
+    name: "Boys Hostel 3 (BH-3)",
+    shortName: "BH-3",
+    type: "residential",
+    floors: 7,
+    coordinates: { x: 26, y: 70 },
+    accessibility: {
+      score: 62,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Multi-story residential hall with ground floor accessible rooms reserved for students with physical disabilities.",
+    barriers: ["Elevator car is compact, tight turning radius for electric wheelchairs"],
+    image: null
+  },
+  {
+    id: "bh-4",
+    slug: "bh-4",
+    name: "Boys Hostel 4 (BH-4)",
+    shortName: "BH-4",
+    type: "residential",
+    floors: 7,
+    coordinates: { x: 32, y: 70 },
+    accessibility: {
+      score: 60,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Residential block with badminton court and night canteen facility.",
+    barriers: ["Main ramp surface is slippery during rainy season"],
+    image: null
+  },
+  {
+    id: "bh-5",
+    slug: "bh-5",
+    name: "Boys Hostel 5 (BH-5)",
+    shortName: "BH-5",
+    type: "residential",
+    floors: 8,
+    coordinates: { x: 20, y: 74 },
+    accessibility: {
+      score: 74,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: true
+    },
+    description: "Modern student hostel with dual wide elevators, ground floor medical isolation room, and wide corridor clearance.",
+    barriers: ["Heavy door closer on mess entrance"],
+    image: null
+  },
+  {
+    id: "bh-6",
+    slug: "bh-6",
+    name: "Boys Hostel 6 (BH-6)",
+    shortName: "BH-6",
+    type: "residential",
+    floors: 8,
+    coordinates: { x: 26, y: 76 },
+    accessibility: {
+      score: 72,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Eight-story residential tower with attached convenience store and gym.",
+    barriers: ["Rear garden access has 3 steps without ramp"],
+    image: null
+  },
+  {
+    id: "bh-7",
+    slug: "bh-7",
+    name: "Boys Hostel 7 (BH-7)",
+    shortName: "BH-7",
+    type: "residential",
+    floors: 9,
+    coordinates: { x: 32, y: 76 },
+    accessibility: {
+      score: 75,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: false
+    },
+    description: "High-capacity residential complex with central open quadrangle and step-free dining halls.",
+    barriers: [],
+    image: null
+  },
+  {
+    id: "bh-8",
+    slug: "bh-8",
+    name: "Boys Hostel 8 (BH-8)",
+    shortName: "BH-8",
+    type: "residential",
+    floors: 9,
+    coordinates: { x: 38, y: 76 },
+    accessibility: {
+      score: 76,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: false
+    },
+    description: "Tower residence equipped with backup generators for continuous elevator uptime.",
+    barriers: [],
+    image: null
+  },
+  {
+    id: "gh-1",
+    slug: "gh-1",
+    name: "Girls Hostel 1 (GH-1)",
+    shortName: "GH-1",
+    type: "residential",
+    floors: 6,
+    coordinates: { x: 64, y: 64 },
+    accessibility: {
+      score: 68,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Secure residential complex for female students with internal laundry, reading room, and medical post.",
+    barriers: ["Biometric turnstile gate is narrow for wheelchairs; security key-card gate must be manually unlocked"],
+    image: null
+  },
+  {
+    id: "gh-2",
+    slug: "gh-2",
+    name: "Girls Hostel 2 (GH-2)",
+    shortName: "GH-2",
+    type: "residential",
+    floors: 6,
+    coordinates: { x: 70, y: 64 },
+    accessibility: {
+      score: 70,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Hostel block with attached convenience tuck shop, reading salon, and courtyard.",
+    barriers: ["Ramp handrail missing on left side"],
+    image: null
+  },
+  {
+    id: "gh-3",
+    slug: "gh-3",
+    name: "Girls Hostel 3 (GH-3)",
+    shortName: "GH-3",
+    type: "residential",
+    floors: 7,
+    coordinates: { x: 64, y: 70 },
+    accessibility: {
+      score: 78,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: true
+    },
+    description: "Multi-story residence featuring ground floor barrier-free rooms with grab-rails in washrooms.",
+    barriers: [],
+    image: null
+  },
+  {
+    id: "gh-4",
+    slug: "gh-4",
+    name: "Girls Hostel 4 (GH-4)",
+    shortName: "GH-4",
+    type: "residential",
+    floors: 7,
+    coordinates: { x: 70, y: 70 },
+    accessibility: {
+      score: 77,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: false,
+      brailleSignage: false
+    },
+    description: "Residential facility with in-house beauty salon, pharmacy counter, and gym.",
+    barriers: ["Gym entrance has 1-step kerb"],
+    image: null
+  },
+  {
+    id: "gh-5",
+    slug: "gh-5",
+    name: "Girls Hostel 5 (GH-5)",
+    shortName: "GH-5",
+    type: "residential",
+    floors: 8,
+    coordinates: { x: 76, y: 74 },
+    accessibility: {
+      score: 82,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: false
+    },
+    description: "Modern high-rise hostel with spacious lifts and wide automated doors in central lobby.",
+    barriers: [],
+    image: null
+  },
+  {
+    id: "gh-6",
+    slug: "gh-6",
+    name: "Girls Hostel 6 (GH-6)",
+    shortName: "GH-6",
+    type: "residential",
+    floors: 8,
+    coordinates: { x: 82, y: 74 },
+    accessibility: {
+      score: 80,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: false
+    },
+    description: "Hostel tower with step-free dining hall access and shaded covered walkways connecting to GH-5.",
+    barriers: [],
+    image: null
+  },
+  {
+    id: "faculty-apt-a",
+    slug: "faculty-apt-a",
+    name: "Faculty & Staff Apartments Tower A",
+    shortName: "Faculty Tower A",
+    type: "residential",
+    floors: 10,
+    coordinates: { x: 88, y: 64 },
+    accessibility: {
+      score: 84,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: false
+    },
+    description: "Residential housing for university professors, international fellows, and staff families.",
+    barriers: ["Visitor parking has gravel surface"],
+    image: null
+  }
+]
+
+export const routes = [
+  { from: "gate-1", to: "block-1", distance: 150, accessible: true, terrain: "paved", barriers: [] },
+  { from: "gate-1", to: "shuttle-terminal", distance: 120, accessible: true, terrain: "paved", barriers: [] },
+  { from: "shuttle-terminal", to: "block-1", distance: 100, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-1", to: "block-2", distance: 110, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-2", to: "block-3", distance: 130, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-3", to: "block-4", distance: 120, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-4", to: "block-13", distance: 180, accessible: false, terrain: "gravel", barriers: ["Gravel machinery track", "High metal kerb"] },
+  { from: "block-13", to: "block-14", distance: 110, accessible: false, terrain: "mixed", barriers: ["Steep slope from testing track"] },
+  { from: "block-1", to: "block-25", distance: 190, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-25", to: "block-26", distance: 120, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-26", to: "block-27", distance: 170, accessible: false, terrain: "gravel", barriers: ["Unpaved farm mud track"] },
+  { from: "block-26", to: "block-28", distance: 150, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-27", to: "block-28", distance: 100, accessible: false, terrain: "gravel", barriers: ["Unpaved agricultural path"] },
+  { from: "block-25", to: "block-29", distance: 140, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-1", to: "block-30", distance: 220, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-30", to: "block-29", distance: 150, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-30", to: "block-31", distance: 140, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-2", to: "block-31", distance: 160, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-31", to: "block-32", distance: 160, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-32", to: "block-33", distance: 120, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-32", to: "block-34", distance: 140, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-30", to: "block-34", distance: 190, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-34", to: "sunken-garden", distance: 100, accessible: false, terrain: "mixed", barriers: ["Steep stepped terrace"] },
+  { from: "block-32", to: "sunken-garden", distance: 90, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-34", to: "student-food-court", distance: 70, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-34", to: "block-35", distance: 130, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-35", to: "block-36", distance: 120, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-36", to: "gate-2", distance: 160, accessible: false, terrain: "mixed", barriers: ["Broken pavement at turnstile", "High kerb"] },
+  { from: "block-36", to: "block-37", distance: 110, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-37", to: "block-38", distance: 120, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-38", to: "gate-4", distance: 200, accessible: false, terrain: "gravel", barriers: ["Unpaved roadside shoulder"] },
+  { from: "block-34", to: "block-55", distance: 110, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-55", to: "block-56", distance: 100, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-35", to: "block-56", distance: 120, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-55", to: "robopark", distance: 80, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-55", to: "unimall", distance: 130, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-34", to: "unimall", distance: 180, accessible: true, terrain: "paved", barriers: [] },
+  { from: "unimall", to: "unipolis", distance: 140, accessible: true, terrain: "paved", barriers: [] },
+  { from: "unipolis", to: "shanti-devi-auditorium", distance: 120, accessible: true, terrain: "paved", barriers: [] },
+  { from: "unimall", to: "uni-hospital", distance: 160, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-56", to: "uni-hospital", distance: 140, accessible: true, terrain: "paved", barriers: [] },
+  { from: "block-36", to: "open-air-theatre", distance: 140, accessible: false, terrain: "mixed", barriers: ["Completely stepped stone amphitheater"] },
+  { from: "uni-hospital", to: "open-air-theatre", distance: 150, accessible: false, terrain: "mixed", barriers: ["Stepped pathway without ramp"] },
+  { from: "shanti-devi-auditorium", to: "indoor-stadium", distance: 200, accessible: true, terrain: "paved", barriers: [] },
+  { from: "indoor-stadium", to: "outdoor-stadium", distance: 160, accessible: false, terrain: "gravel", barriers: ["Paved track ends at muddy bleacher entrance"] },
+  { from: "indoor-stadium", to: "gate-3", distance: 180, accessible: true, terrain: "paved", barriers: [] },
+  { from: "unipolis", to: "bh-1", distance: 220, accessible: true, terrain: "paved", barriers: [] },
+  { from: "bh-1", to: "bh-2", distance: 80, accessible: true, terrain: "paved", barriers: [] },
+  { from: "bh-1", to: "bh-3", distance: 90, accessible: true, terrain: "paved", barriers: [] },
+  { from: "bh-2", to: "bh-4", distance: 90, accessible: true, terrain: "paved", barriers: [] },
+  { from: "bh-3", to: "bh-5", distance: 110, accessible: true, terrain: "paved", barriers: [] },
+  { from: "bh-3", to: "bh-4", distance: 80, accessible: true, terrain: "paved", barriers: [] },
+  { from: "bh-5", to: "bh-6", distance: 80, accessible: true, terrain: "paved", barriers: [] },
+  { from: "bh-6", to: "bh-7", distance: 80, accessible: true, terrain: "paved", barriers: [] },
+  { from: "bh-7", to: "bh-8", distance: 80, accessible: true, terrain: "paved", barriers: [] },
+  { from: "bh-4", to: "bh-7", distance: 100, accessible: true, terrain: "paved", barriers: [] },
+  { from: "indoor-stadium", to: "bh-1", distance: 140, accessible: true, terrain: "paved", barriers: [] },
+  { from: "uni-hospital", to: "gh-1", distance: 180, accessible: true, terrain: "paved", barriers: [] },
+  { from: "gh-1", to: "gh-2", distance: 80, accessible: true, terrain: "paved", barriers: [] },
+  { from: "gh-1", to: "gh-3", distance: 90, accessible: true, terrain: "paved", barriers: [] },
+  { from: "gh-2", to: "gh-4", distance: 90, accessible: true, terrain: "paved", barriers: [] },
+  { from: "gh-3", to: "gh-4", distance: 80, accessible: true, terrain: "paved", barriers: [] },
+  { from: "gh-3", to: "gh-5", distance: 110, accessible: true, terrain: "paved", barriers: [] },
+  { from: "gh-5", to: "gh-6", distance: 80, accessible: true, terrain: "paved", barriers: [] },
+  { from: "gh-4", to: "gh-6", distance: 100, accessible: true, terrain: "paved", barriers: [] },
+  { from: "gh-2", to: "faculty-apt-a", distance: 200, accessible: true, terrain: "paved", barriers: [] },
+  { from: "faculty-apt-a", to: "gate-4", distance: 240, accessible: true, terrain: "paved", barriers: [] },
+  { from: "unimall", to: "gh-1", distance: 240, accessible: true, terrain: "paved", barriers: [] },
+  { from: "unimall", to: "bh-1", distance: 260, accessible: true, terrain: "paved", barriers: [] }
+]
+
+export const barrierTypes = [
+  { id: "kerb", label: "Kerb / Step", icon: "🚧" },
+  { id: "broken-ramp", label: "Broken Ramp", icon: "⚠️" },
+  { id: "locked-lift", label: "Locked / Broken Lift", icon: "🔒" },
+  { id: "narrow-path", label: "Narrow Pathway", icon: "📏" },
+  { id: "uneven-surface", label: "Uneven Surface", icon: "🔶" },
+  { id: "no-handrail", label: "Missing Handrail", icon: "🛑" },
+  { id: "heavy-door", label: "Heavy Door", icon: "🚪" },
+  { id: "steep-slope", label: "Steep Slope", icon: "⛰️" },
+  { id: "poor-lighting", label: "Poor Lighting", icon: "💡" },
+  { id: "other", label: "Other", icon: "📝" }
+]
+
+export const severityLevels = [
+  { id: "low", label: "Minor Inconvenience", color: "#F59E0B" },
+  { id: "medium", label: "Significant Barrier", color: "#F97316" },
+  { id: "high", label: "Complete Blocker", color: "#EF4444" }
+]
+
+export const accessibilityFeatures = [
+  { id: "ramp", label: "Ramp Available", icon: "♿" },
+  { id: "elevator", label: "Elevator", icon: "🛗" },
+  { id: "accessibleEntrance", label: "Accessible Entrance", icon: "🚪" },
+  { id: "accessibleWashroom", label: "Accessible Washroom", icon: "🚻" },
+  { id: "tactilePath", label: "Tactile Path", icon: "🦯" },
+  { id: "brailleSignage", label: "Braille Signage", icon: "📋" }
+]
+
+export function getBuildingById(id) {
+  return buildings.find(b => b.id === id)
+}
+
+export function getBuildingBySlug(slug) {
+  return buildings.find(b => b.slug === slug)
+}
+
+export function getRoutesBetween(fromId, toId) {
+  return routes.filter(r =>
+    (r.from === fromId && r.to === toId) ||
+    (r.from === toId && r.to === fromId)
+  )
+}
+
+export function getAccessibleRoutes() {
+  return routes.filter(r => r.accessible)
+}
+
+export function getBuildingsByType(type) {
+  return buildings.filter(b => b.type === type)
+}
+
+export function getAverageAccessibilityScore() {
+  const total = buildings.reduce((sum, b) => sum + b.accessibility.score, 0)
+  return Math.round(total / buildings.length)
+}
