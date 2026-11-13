@@ -36,6 +36,9 @@ export default function Footer() {
               <Link href="/explore" className="block text-slate-400 hover:text-teal-300 transition-colors">
                 Interactive Campus Map
               </Link>
+              <Link href="/tour" className="block text-slate-400 hover:text-teal-300 transition-colors">
+                360° Virtual Campus Tour
+              </Link>
               <Link href="/dashboard" className="block text-slate-400 hover:text-teal-300 transition-colors">
                 Building Access Scores
               </Link>

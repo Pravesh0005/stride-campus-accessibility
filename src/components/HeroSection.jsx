@@ -16,7 +16,8 @@ import {
   ChevronRight,
   ShieldCheck,
   Building,
-  Route as RouteIcon
+  Route as RouteIcon,
+  Eye
 } from "lucide-react"
 
 const stats = [
@@ -123,6 +124,13 @@ export default function HeroSection() {
                   <Compass className="w-4 h-4" />
                   Explore 52 Campus Blocks
                   <ArrowRight className="w-4 h-4 ml-0.5" />
+                </Link>
+                <Link
+                  href="/tour"
+                  className="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl font-bold text-sm text-teal-800 bg-teal-50 hover:bg-teal-100 border border-teal-200/90 shadow-xs transition-all"
+                >
+                  <Eye className="w-4 h-4 text-teal-600" />
+                  360° VR Tour
                 </Link>
                 <Link
                   href="/report"

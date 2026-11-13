@@ -17,7 +17,8 @@ import {
   ArrowRight,
   Info,
   Calendar,
-  Sparkles
+  Sparkles,
+  Eye
 } from "lucide-react"
 
 export function generateStaticParams() {
@@ -258,6 +259,23 @@ export default async function BuildingPage({ params }) {
                 className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-white text-violet-800 font-bold text-xs hover:bg-slate-50 transition-colors shadow-md"
               >
                 Open in Route Navigator <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            <div className="rounded-3xl p-6 bg-slate-900 border border-slate-800 text-white shadow-xl">
+              <div className="flex items-center gap-2 text-teal-400 text-xs font-bold mb-2">
+                <Eye className="w-4 h-4" />
+                <span>360° Virtual Inspection</span>
+              </div>
+              <h3 className="text-base font-black mb-1.5 text-white">Experience in 3D / 360°</h3>
+              <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                Check entrance ramps, elevator clearance, and hallway widths in immersive 360° panoramic virtual tour.
+              </p>
+              <Link
+                href="/tour"
+                className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs transition-colors shadow-md"
+              >
+                Launch 360° Campus Tour <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 

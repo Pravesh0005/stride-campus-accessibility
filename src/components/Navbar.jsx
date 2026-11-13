@@ -8,6 +8,7 @@ import { Menu, X, Accessibility, AlertTriangle } from "lucide-react"
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/explore", label: "Campus Map" },
+  { href: "/tour", label: "360° Tour" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/feed", label: "Community" },
   { href: "/profile", label: "My Profile" },
