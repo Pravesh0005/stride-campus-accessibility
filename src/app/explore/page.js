@@ -6,6 +6,7 @@ import { findAllPaths } from "@/lib/pathfinding"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import CampusMap from "@/components/CampusMap"
+import Campus360Viewer from "@/components/Campus360Viewer"
 import RouteCard from "@/components/RouteCard"
 import BuildingCard from "@/components/BuildingCard"
 import {
@@ -16,7 +17,9 @@ import {
   Building2,
   Sparkles,
   ArrowRight,
-  Filter
+  Filter,
+  Eye,
+  Compass
 } from "lucide-react"
 
 export default function ExplorePage() {
@@ -28,6 +31,7 @@ export default function ExplorePage() {
   const [highlightedPath, setHighlightedPath] = useState(null)
   const [showResults, setShowResults] = useState(false)
   const [filterType, setFilterType] = useState("all")
+  const [viewMode, setViewMode] = useState("2d")
 
   const handleFindRoute = (e) => {
     if (e) e.preventDefault()
@@ -71,7 +75,7 @@ export default function ExplorePage() {
               Interactive Campus Accessibility Map
             </h1>
             <p className="text-slate-400 text-sm mt-1.5 max-w-2xl leading-relaxed">
-              Find verified step-free corridors between 10 key campus facilities. Select origin and destination to calculate Dijkstra-optimized barrier-free paths.
+              Find verified step-free corridors between 52 authentic LPU academic blocks, facilities & hostels. Select origin and destination to calculate Dijkstra-optimized barrier-free paths.
             </p>
           </div>
 
@@ -98,11 +102,46 @@ export default function ExplorePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           <div className="lg:col-span-7 space-y-6">
-            <CampusMap
-              selectedBuilding={selectedBuilding}
-              onBuildingSelect={handleBuildingSelect}
-              highlightedPath={highlightedPath}
-            />
+            <div className="flex items-center justify-between bg-white p-2 rounded-2xl border border-slate-200/80 shadow-xs">
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setViewMode("2d")}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                    viewMode === "2d"
+                      ? "bg-violet-600 text-white shadow-sm"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                  }`}
+                >
+                  2D Network Map
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode("3d")}
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                    viewMode === "3d"
+                      ? "bg-violet-600 text-white shadow-sm"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                  }`}
+                >
+                  <Eye className="w-3.5 h-3.5 text-teal-400" />
+                  360° / 3D Virtual Tour
+                </button>
+              </div>
+              <span className="text-[11px] font-bold text-slate-400 pr-2 hidden sm:inline">
+                {viewMode === "2d" ? "52 Mapped Blocks" : "LPUTouch VR Mode"}
+              </span>
+            </div>
+
+            {viewMode === "2d" ? (
+              <CampusMap
+                selectedBuilding={selectedBuilding}
+                onBuildingSelect={handleBuildingSelect}
+                highlightedPath={highlightedPath}
+              />
+            ) : (
+              <Campus360Viewer initialScene={selectedBuilding || "block-34"} />
+            )}
 
             {selectedBuildingData && (
               <div className="bg-white rounded-3xl p-6 border-2 border-violet-500 shadow-xl">
