@@ -1,6 +1,6 @@
 import Link from "next/link"
 import AccessibilityScore from "@/components/AccessibilityScore"
-import { getBuildingTypeIcon, getBuildingTypeLabel, getScoreLabel } from "@/lib/utils"
+import { getBuildingTypeIcon, getBuildingTypeLabel, getScoreLabel, getBuildingImage } from "@/lib/utils"
 import { Layers, ArrowRight, Check, X, AlertTriangle } from "lucide-react"
 
 export default function BuildingCard({ building }) {
@@ -11,8 +11,12 @@ export default function BuildingCard({ building }) {
       <div className="bg-white rounded-2xl p-5 border border-slate-200/90 hover:border-violet-300 hover:shadow-lg transition-all duration-200">
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
-              {getBuildingTypeIcon(building.type)}
+            <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 group-hover:scale-105 transition-transform bg-slate-100 border border-slate-200/80">
+              <img
+                src={getBuildingImage(building)}
+                alt={building.name}
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <h3 className="font-bold text-slate-900 text-base leading-snug group-hover:text-violet-700 transition-colors">

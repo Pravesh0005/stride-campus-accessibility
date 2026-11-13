@@ -1,6 +1,6 @@
 import { getBuildingBySlug, getBuildingById, accessibilityFeatures, buildings as allBuildings } from "@/lib/campusData"
 import { getConnectedBuildings } from "@/lib/pathfinding"
-import { getBuildingTypeIcon, getBuildingTypeLabel, getScoreLabel } from "@/lib/utils"
+import { getBuildingTypeIcon, getBuildingTypeLabel, getScoreLabel, getBuildingImage } from "@/lib/utils"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import AccessibilityScore from "@/components/AccessibilityScore"
@@ -18,7 +18,8 @@ import {
   Info,
   Calendar,
   Sparkles,
-  Eye
+  Eye,
+  Camera
 } from "lucide-react"
 
 export function generateStaticParams() {
@@ -114,6 +115,29 @@ export default async function BuildingPage({ params }) {
           
           <div className="lg:col-span-8 space-y-8">
             
+            <div className="relative rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm aspect-[21/9] min-h-[200px] max-h-[300px] bg-slate-900">
+              <img
+                src={getBuildingImage(building)}
+                alt={building.name}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-5">
+                <div className="flex items-center justify-between w-full text-white flex-wrap gap-2">
+                  <div className="flex items-center gap-2">
+                    <Camera className="w-4 h-4 text-teal-400" />
+                    <span className="text-xs font-bold text-slate-200">Verified Campus Facility Photo</span>
+                  </div>
+                  <Link
+                    href="/tour"
+                    className="px-3 py-1.5 rounded-xl bg-violet-600/90 hover:bg-violet-600 text-white text-xs font-bold backdrop-blur-xs flex items-center gap-1.5 transition-colors"
+                  >
+                    <Eye className="w-3.5 h-3.5" />
+                    <span>View in 360° VR Tour</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
               <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
                 <div className="flex items-center gap-2.5">
