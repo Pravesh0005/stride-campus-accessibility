@@ -24,8 +24,8 @@ export const buildings = [
   {
     id: "block-2",
     slug: "block-2",
-    name: "Block 2 (Division of Student Welfare - DSW)",
-    shortName: "Block 2",
+    name: "Block 2 (Examination Department & Academic Evaluation)",
+    shortName: "Block 2 (Exams)",
     type: "administrative",
     floors: 4,
     coordinates: { x: 42, y: 12 },
@@ -39,30 +39,30 @@ export const buildings = [
       tactilePath: false,
       brailleSignage: false
     },
-    description: "Hub for student clubs, cultural councils, scholarship desks, NCC/NSS cells, and student grievance redresal.",
+    description: "University examination controllers, transcript dispatch wing, grade evaluation facilitation, and confidential student records.",
     barriers: ["Threshold ramp slope exceeds 1:10 at west annex"],
     image: null
   },
   {
     id: "block-3",
     slug: "block-3",
-    name: "Block 3 (Civil Engineering)",
-    shortName: "Block 3",
-    type: "academic",
-    floors: 5,
+    name: "Block 3 (Uni-Hospital & Medical Emergency Wing)",
+    shortName: "Block 3 (Hospital)",
+    type: "medical",
+    floors: 4,
     coordinates: { x: 32, y: 14 },
     accessibility: {
-      score: 65,
+      score: 88,
       ramp: true,
       elevator: true,
       elevatorWorking: true,
       accessibleEntrance: true,
-      accessibleWashroom: false,
-      tactilePath: false,
-      brailleSignage: false
+      accessibleWashroom: true,
+      tactilePath: true,
+      brailleSignage: true
     },
-    description: "Concrete testing labs, surveying studios, environmental engineering facilities, and departmental lecture theaters.",
-    barriers: ["Heavy materials lab in basement has stair-only access"],
+    description: "24/7 University Health Centre, emergency medical triage, clinical pharmacy, diagnostic laboratories, and dedicated ramp ambulance entrance.",
+    barriers: ["Ramp handrail undergoing routine inspection"],
     image: null
   },
   {
@@ -244,23 +244,23 @@ export const buildings = [
   {
     id: "block-30",
     slug: "block-30",
-    name: "Block 30 (Central Library Resource Centre)",
-    shortName: "Central Library",
-    type: "library",
-    floors: 5,
+    name: "Block 30 (Department of Mathematics & Basic Sciences)",
+    shortName: "Block 30 (Maths)",
+    type: "academic",
+    floors: 4,
     coordinates: { x: 50, y: 24 },
     accessibility: {
-      score: 92,
+      score: 76,
       ramp: true,
       elevator: true,
       elevatorWorking: true,
       accessibleEntrance: true,
       accessibleWashroom: true,
-      tactilePath: true,
-      brailleSignage: true
+      tactilePath: false,
+      brailleSignage: false
     },
-    description: "Multi-story university central library, quiet reading zones, digital reference terminals, and audio-book facilities.",
-    barriers: ["Side ramp near garden has 1:8 steep gradient"],
+    description: "Department of Mathematics, Statistics, Physics lecture rooms, and foundational engineering science laboratories.",
+    barriers: ["Threshold step at north annex entrance"],
     image: null
   },
   {
@@ -288,23 +288,23 @@ export const buildings = [
   {
     id: "block-32",
     slug: "block-32",
-    name: "Block 32 (Mittal School of Business)",
-    shortName: "Block 32 (Business)",
-    type: "academic",
+    name: "Block 32 (Division of Student Welfare - DSW & Business)",
+    shortName: "Block 32 (DSW & Business)",
+    type: "administrative",
     floors: 5,
     coordinates: { x: 38, y: 34 },
     accessibility: {
-      score: 86,
+      score: 88,
       ramp: true,
       elevator: true,
       elevatorWorking: true,
       accessibleEntrance: true,
       accessibleWashroom: true,
       tactilePath: true,
-      brailleSignage: false
+      brailleSignage: true
     },
-    description: "MBA lecture halls, executive boardroom simulations, trading floor lab, and corporate placement conference halls.",
-    barriers: ["Auditorium tier seating lacks wheelchair parking spots"],
+    description: "Primary student welfare hub housing DSW, student council desks, scholarship counters, international affairs, mentoring cells, and Mittal School of Business.",
+    barriers: ["Heavy foot traffic near elevator bank during lunch hours"],
     image: null
   },
   {
@@ -398,45 +398,45 @@ export const buildings = [
   {
     id: "block-37",
     slug: "block-37",
-    name: "Block 37 (School of Education & Humanities)",
-    shortName: "Block 37",
-    type: "academic",
-    floors: 4,
+    name: "Block 37 (Central Library)",
+    shortName: "Central Library (B37)",
+    type: "library",
+    floors: 5,
     coordinates: { x: 74, y: 38 },
     accessibility: {
-      score: 72,
-      ramp: true,
-      elevator: true,
-      elevatorWorking: true,
-      accessibleEntrance: true,
-      accessibleWashroom: false,
-      tactilePath: false,
-      brailleSignage: false
-    },
-    description: "Psychology labs, pedagogy lecture halls, linguistics audio-visual studios, and research rooms.",
-    barriers: ["No dedicated disabled washroom on 3rd and 4th floors"],
-    image: null
-  },
-  {
-    id: "block-38",
-    slug: "block-38",
-    name: "Block 38 (Examination Department & Records)",
-    shortName: "Block 38 (Exams)",
-    type: "administrative",
-    floors: 4,
-    coordinates: { x: 82, y: 40 },
-    accessibility: {
-      score: 78,
+      score: 92,
       ramp: true,
       elevator: true,
       elevatorWorking: true,
       accessibleEntrance: true,
       accessibleWashroom: true,
-      tactilePath: false,
+      tactilePath: true,
+      brailleSignage: true
+    },
+    description: "Iconic multi-story central university library, quiet reading zones, digital reference terminals, and audio-book facilities.",
+    barriers: ["Side ramp near garden has 1:8 steep gradient"],
+    image: null
+  },
+  {
+    id: "block-38",
+    slug: "block-38",
+    name: "Block 38 (Computer Applications & Research Labs)",
+    shortName: "Block 38 (Research & MCA)",
+    type: "academic",
+    floors: 4,
+    coordinates: { x: 82, y: 40 },
+    accessibility: {
+      score: 82,
+      ramp: true,
+      elevator: true,
+      elevatorWorking: true,
+      accessibleEntrance: true,
+      accessibleWashroom: true,
+      tactilePath: true,
       brailleSignage: false
     },
-    description: "Degree verification counters, transcript dispatch cell, examination control room, and confidential archives.",
-    barriers: ["Student grievance counter height exceeds wheelchair reach"],
+    description: "Advanced computing laboratories, Centre for Research Degree Programmes (Ph.D.), artificial intelligence research clusters, and postgraduate computing studios.",
+    barriers: ["Heavy security turnstiles at ground floor lobby"],
     image: null
   },
   {
