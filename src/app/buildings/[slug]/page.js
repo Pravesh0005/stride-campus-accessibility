@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import AccessibilityScore from "@/components/AccessibilityScore"
 import StatusBadge from "@/components/StatusBadge"
+import BuildingCommunityReports from "@/components/BuildingCommunityReports"
 import Link from "next/link"
 import {
   ArrowLeft,
@@ -183,6 +184,9 @@ export default async function BuildingPage({ params }) {
                 })}
               </div>
             </div>
+
+            {/* Live Student Community Reports with Uploaded Photos */}
+            <BuildingCommunityReports buildingId={building.id} buildingName={building.name} />
 
             {building.barriers && building.barriers.length > 0 ? (
               <div className="bg-amber-50/80 rounded-3xl p-6 sm:p-8 border border-amber-200/90 shadow-sm">

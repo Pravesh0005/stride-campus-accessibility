@@ -1,14 +1,16 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { buildings } from "@/lib/campusData"
 import { findAllPaths } from "@/lib/pathfinding"
+import { getStoredReports } from "@/lib/reportsStorage"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import CampusMap from "@/components/CampusMap"
 import Campus360Viewer from "@/components/Campus360Viewer"
 import RouteCard from "@/components/RouteCard"
 import BuildingCard from "@/components/BuildingCard"
+import Link from "next/link"
 import {
   Navigation,
   Search,
@@ -19,7 +21,12 @@ import {
   ArrowRight,
   Filter,
   Eye,
-  Compass
+  Compass,
+  ShieldAlert,
+  Camera,
+  AlertTriangle,
+  ZoomIn,
+  X
 } from "lucide-react"
 
 export default function ExplorePage() {
@@ -32,6 +39,17 @@ export default function ExplorePage() {
   const [showResults, setShowResults] = useState(false)
   const [filterType, setFilterType] = useState("all")
   const [viewMode, setViewMode] = useState("2d")
+  const [communityReports, setCommunityReports] = useState([])
+  const [previewPhoto, setPreviewPhoto] = useState(null)
+
+  useEffect(() => {
+    const loadReports = () => {
+      setCommunityReports(getStoredReports())
+    }
+    loadReports()
+    window.addEventListener("stride:report_added", loadReports)
+    return () => window.removeEventListener("stride:report_added", loadReports)
+  }, [])
 
   const handleFindRoute = (e) => {
     if (e) e.preventDefault()
@@ -144,8 +162,8 @@ export default function ExplorePage() {
             )}
 
             {selectedBuildingData && (
-              <div className="bg-white rounded-3xl p-6 border-2 border-violet-500 shadow-xl">
-                <div className="flex items-center justify-between mb-4">
+              <div className="bg-white rounded-3xl p-6 border-2 border-violet-500 shadow-xl space-y-4">
+                <div className="flex items-center justify-between">
                   <span className="text-xs font-extrabold uppercase tracking-wider text-violet-700 bg-violet-50 px-3 py-1 rounded-full border border-violet-200">
                     Inspecting Building
                   </span>
@@ -156,6 +174,36 @@ export default function ExplorePage() {
                     Close inspection ✕
                   </button>
                 </div>
+
+                {/* Show any active barrier report for this selected building */}
+                {communityReports.filter(r => r.buildingId === selectedBuilding).map(rep => (
+                  <div key={rep.id} className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex flex-col sm:flex-row gap-3 items-start">
+                    {rep.photo && (
+                      <div 
+                        onClick={() => setPreviewPhoto(rep.photo)}
+                        className="w-full sm:w-28 aspect-[4/3] rounded-xl overflow-hidden bg-slate-900 shrink-0 border border-rose-200 relative cursor-pointer group"
+                      >
+                        <img src={rep.photo} alt={rep.barrierLabel} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[9px] font-bold gap-1">
+                          <ZoomIn className="w-3 h-3" /> Zoom
+                        </div>
+                      </div>
+                    )}
+                    <div className="flex-1 space-y-1">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="px-2 py-0.5 rounded text-[9px] font-extrabold uppercase bg-red-600 text-white">
+                          Active Student Alert
+                        </span>
+                        <span className="text-xs font-bold text-rose-950">{rep.barrierLabel}</span>
+                      </div>
+                      <p className="text-xs text-rose-900 leading-snug">"{rep.description}"</p>
+                      {rep.locationDetails && (
+                        <div className="text-[10px] text-rose-700 font-medium">Spot: {rep.locationDetails}</div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+
                 <BuildingCard building={selectedBuildingData} />
               </div>
             )}
@@ -280,6 +328,78 @@ export default function ExplorePage() {
               </div>
             )}
 
+            {/* LIVE COMMUNITY BARRIER ALERTS & PHOTO PROOFS */}
+            <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  <ShieldAlert className="w-4 h-4 text-red-600" />
+                  <h2 className="text-sm font-black text-slate-900">Live Campus Barrier Alerts</h2>
+                </div>
+                <Link
+                  href="/report"
+                  className="text-[11px] font-bold text-red-600 hover:text-red-700 flex items-center gap-1"
+                >
+                  + Report Barrier
+                </Link>
+              </div>
+
+              <div className="space-y-3 max-h-[340px] overflow-y-auto pr-1">
+                {communityReports.map(rep => (
+                  <div
+                    key={rep.id}
+                    className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all space-y-2.5"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedBuilding(rep.buildingId)
+                          const el = document.getElementById("map-canvas-container")
+                          if (el) el.scrollIntoView({ behavior: "smooth" })
+                        }}
+                        className="text-xs font-bold text-slate-900 hover:text-violet-600 text-left flex items-center gap-1 truncate"
+                      >
+                        <MapPin className="w-3 h-3 text-violet-600 shrink-0" />
+                        <span className="truncate">{rep.buildingName}</span>
+                      </button>
+                      <span className={`px-2 py-0.5 rounded text-[9px] font-extrabold uppercase shrink-0 ${
+                        rep.severity === "high" || rep.severity === "critical"
+                          ? "bg-rose-100 text-rose-700"
+                          : "bg-amber-100 text-amber-700"
+                      }`}>
+                        {rep.severity}
+                      </span>
+                    </div>
+
+                    <div className="flex gap-3 items-start">
+                      {rep.photo && (
+                        <div
+                          onClick={() => setPreviewPhoto(rep.photo)}
+                          className="w-20 h-16 rounded-lg overflow-hidden bg-slate-900 shrink-0 border border-slate-200 relative cursor-pointer group"
+                        >
+                          <img src={rep.photo} alt={rep.barrierLabel} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[8px] font-bold">
+                            <ZoomIn className="w-3 h-3" />
+                          </div>
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[11px] font-bold text-slate-800 line-clamp-1">{rep.barrierLabel}</div>
+                        <p className="text-[11px] text-slate-600 line-clamp-2 mt-0.5">{rep.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                <span className="text-slate-500 font-medium">Crowdsourced by LPU students</span>
+                <Link href="/feed" className="font-bold text-violet-600 hover:text-violet-700 flex items-center gap-1">
+                  View full live feed <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
+            </div>
+
             <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6">
               <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
                 <div className="flex items-center gap-2">
@@ -315,6 +435,36 @@ export default function ExplorePage() {
           </div>
         </div>
       </main>
+
+      {/* Lightbox Modal for Photo Proofs */}
+      {previewPhoto && (
+        <div
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4"
+          onClick={() => setPreviewPhoto(null)}
+        >
+          <div
+            className="relative max-w-3xl w-full bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="p-4 bg-slate-950 flex items-center justify-between text-white border-b border-slate-800">
+              <span className="text-xs font-bold">Field Photographic Proof • Campus Map Alert</span>
+              <button
+                onClick={() => setPreviewPhoto(null)}
+                className="w-7 h-7 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="p-2 flex items-center justify-center bg-black">
+              <img
+                src={previewPhoto}
+                alt="Enlarged campus barrier photo"
+                className="max-h-[70vh] w-auto max-w-full object-contain rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>
