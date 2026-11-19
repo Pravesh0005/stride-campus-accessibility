@@ -88,7 +88,7 @@ export default function HeroSection() {
               >
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-100/80 border border-violet-200 text-violet-800 text-xs font-bold tracking-wide">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 pulse-dot shrink-0" />
-                  <span>INT252 / INT257 Capstone • Problem 12 (LPU Campus Edition)</span>
+                  <span>Lovely Professional University • Campus Accessibility Network</span>
                 </div>
               </motion.div>
 

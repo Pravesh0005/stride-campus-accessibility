@@ -23,10 +23,10 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-2 text-xs text-slate-500">
               <span className="inline-flex items-center gap-1 text-slate-400">
-                <Heart className="w-3 h-3 text-rose-500 fill-rose-500" /> Built for INT252 / INT257 CA2
+                <Heart className="w-3 h-3 text-rose-500 fill-rose-500" /> Lovely Professional University
               </span>
               <span>•</span>
-              <span>Problem 12</span>
+              <span>Campus Accessibility Network</span>
             </div>
           </div>
 
@@ -66,9 +66,9 @@ export default function Footer() {
         <div className="border-t border-slate-800/80 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>© 2026 Stride. Designed and engineered for an equitable, barrier-free campus.</p>
           <div className="flex items-center gap-3">
-            <span className="text-slate-400 font-semibold">Team Project Submission</span>
+            <span className="text-slate-400 font-semibold">Lovely Professional University</span>
             <span>•</span>
-            <span>Next.js 16 + React 19</span>
+            <span>52 Campus Blocks Mapped</span>
           </div>
         </div>
       </div>
