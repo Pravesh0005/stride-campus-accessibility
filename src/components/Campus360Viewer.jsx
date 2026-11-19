@@ -1,3 +1,10 @@
+/**
+ * @module Campus360Viewer
+ * @author Pravesh (Reg. No. 12419500) — Team Lead & Core Engine Architect
+ * @subsystem Core Routing, VR & Auth Subsystem
+ * @description Multi-mode 360° virtual reality inspection engine (LPU2 Walkthrough, VR Equirectangular, Audits, Satellite).
+ */
+
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
@@ -736,30 +743,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
             {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </button>
         </div>
-      </div>
-
-      {/* Facility Quick Selector Carousel */}
-      <div className="px-4 py-2.5 bg-slate-900/60 border-b border-slate-800/80 flex items-center gap-2 overflow-x-auto scrollbar-none">
-        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
-          <MapPin className="w-3.5 h-3.5 text-teal-400" /> Quick Arena:
-        </span>
-        {tourFacilities.map(f => (
-          <button
-            key={f.id}
-            onClick={() => {
-              setSelectedFacilityId(f.id)
-              setSelectedHotspot(null)
-              resetView()
-            }}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all shrink-0 ${
-              selectedFacilityId === f.id
-                ? "bg-violet-600 text-white shadow-xs"
-                : "bg-slate-800/80 text-slate-400 hover:text-slate-200 hover:bg-slate-700"
-            }`}
-          >
-            {f.shortLabel}
-          </button>
-        ))}
       </div>
 
       {/* Main Interactive Stage */}
