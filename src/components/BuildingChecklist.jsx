@@ -1,3 +1,11 @@
+/**
+ * @module BuildingChecklist
+ * @author Konatala Naveen (Reg. No. 12417251) — Full-Stack Audit & Community Lead
+ * @coauthor Pravesh (Reg. No. 12419500) — Team Lead & Core Engine Architect
+ * @subsystem Institutional Audit & Community Subsystem
+ * @description Dynamic 2-lift per block status indicator and crowdsourced obstacle verification with photo proof.
+ */
+
 "use client"
 
 import { useState, useEffect } from "react"

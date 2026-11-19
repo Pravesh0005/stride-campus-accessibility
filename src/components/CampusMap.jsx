@@ -1,3 +1,10 @@
+/**
+ * @module CampusMap
+ * @author Kartik Grewal (Reg. No. 12406604) — Geospatial & Campus Mapping Lead
+ * @subsystem Geospatial Graph & Network Map Subsystem
+ * @description Interactive 2D vector SVG campus map canvas with coordinate scaling, pan/zoom, and route highlighting.
+ */
+
 "use client"
 
 import { useState } from "react"

@@ -1,4 +1,9 @@
-// Client-side persistent storage and event bus for crowdsourced campus barrier reports
+/**
+ * @module ReportsStorageBus
+ * @author Konatala Naveen (Reg. No. 12417251) — Full-Stack Audit & Community Lead
+ * @subsystem Institutional Audit & Community Subsystem
+ * @description Client-side persistent storage and reactive event bus for crowdsourced campus barrier reports.
+ */
 
 const STORAGE_KEY = "stride_campus_reports_v2"
 

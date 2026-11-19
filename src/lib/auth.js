@@ -109,3 +109,4 @@ export function updateProfile(updates) {
   window.dispatchEvent(new CustomEvent("stride:auth_state_changed", { detail: updated }))
   return updated
 }
+

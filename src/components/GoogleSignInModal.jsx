@@ -194,3 +194,4 @@ export default function GoogleSignInModal({ isOpen, onClose, onLoginSuccess }) {
     </div>
   )
 }
+
