@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import AccessibilityScore from "@/components/AccessibilityScore"
 import StatusBadge from "@/components/StatusBadge"
+import DashboardRecentAlerts from "@/components/DashboardRecentAlerts"
 import Link from "next/link"
 import { buildings, getAverageAccessibilityScore } from "@/lib/campusData"
 import { getBuildingTypeIcon, getBuildingTypeLabel } from "@/lib/utils"
@@ -99,6 +100,9 @@ export default function DashboardPage() {
             </div>
           ))}
         </div>
+
+        {/* Live Field Reports & Photo Evidence from Students */}
+        <DashboardRecentAlerts />
 
         <div>
           <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-200/80">
