@@ -22,6 +22,7 @@ import {
   ShieldCheck,
   RotateCw,
   Info,
+  Globe,
   X
 } from "lucide-react"
 
@@ -29,17 +30,17 @@ const tourFacilities = [
   {
     id: "block-34",
     name: "Block 34 (School of CSE) Tower",
-    shortLabel: "Block 34",
+    shortLabel: "Block 34 CSE",
     type: "Academic High-Rise",
     coordinates: "31.2554° N, 75.7051° E",
     description: "The primary 8-story computing faculty tower housing computer science lecture auditoriums, coding incubators, AI labs, and high-traffic tech plaza.",
     score: 91,
-    panoramaImage: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2400&q=85",
-    heroImage: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=80",
+    panoramaImage: "/lpu_photos/lpu-campus-16.jpg",
+    heroImage: "/lpu_photos/lpu-campus-16.jpg",
     hotspots: [
       {
         id: "b34-ramp",
-        title: "North Entrance Ramp",
+        title: "North Entrance Barrier-Free Ramp",
         tag: "Grade 1:12 Certified",
         yaw: 15,
         pitch: -12,
@@ -67,25 +68,25 @@ const tourFacilities = [
     ],
     photos: [
       {
+        title: "Block 34 CSE Computing Tower Facade",
+        tag: "LPU Punjab Campus",
+        verified: true,
+        desc: "Iconic multi-story computing block equipped with covered ground-floor colonnade and ramps.",
+        url: "/lpu_photos/lpu-campus-16.jpg"
+      },
+      {
         title: "North Entrance Barrier-Free Ramp",
         tag: "Grade 1:12 Certified",
         verified: true,
-        desc: "Smooth concrete ramp equipped with dual stainless-steel handrails and anti-slip ribbed grooves.",
-        url: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1000&q=80"
+        desc: "Dedicated wheelchair entrance ramp connecting the central pedestrian corridor to the lobby.",
+        url: "/lpu_photos/lpu-campus-15.jpg"
       },
       {
-        title: "Dual Otis Elevator Lobby",
-        tag: "16-Passenger High Capacity",
+        title: "Central Tech Plaza & Walkways",
+        tag: "Step-Free Corridor",
         verified: true,
-        desc: "Wide door clearance (38-inch), audible floor arrival chimes, and low-mounted braille buttons.",
-        url: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1000&q=80"
-      },
-      {
-        title: "Ground Floor Step-Free Corridor",
-        tag: "Continuous Tactile Pavers",
-        verified: true,
-        desc: "Polished terrazzo step-free walkway connecting directly to Block 32 and central food plazas.",
-        url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80"
+        desc: "Paved boulevard connecting Block 34 to UniMall and Block 32 with zero kerb drops.",
+        url: "/lpu_photos/lpu-campus-14.jpg"
       }
     ]
   },
@@ -97,8 +98,8 @@ const tourFacilities = [
     coordinates: "31.2548° N, 75.7060° E",
     description: "Iconic multi-story central university library housing over 1.5 million digital and physical volumes, quiet study floors, and accessible reading carrels.",
     score: 95,
-    panoramaImage: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=2400&q=85",
-    heroImage: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1600&q=80",
+    panoramaImage: "/lpu_photos/lpu-campus-19.jpg",
+    heroImage: "/lpu_photos/lpu-campus-19.jpg",
     hotspots: [
       {
         id: "b37-entrance",
@@ -130,25 +131,25 @@ const tourFacilities = [
     ],
     photos: [
       {
-        title: "Main Library Entrance Colonnade",
-        tag: "Level Approach",
+        title: "Central Library Multi-Storey Facade",
+        tag: "Iconic Landmark",
         verified: true,
-        desc: "Wide paved plaza approach free of steps or open kerb drops.",
-        url: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1000&q=80"
+        desc: "LPU's massive Central Library building featuring extensive glass atriums and accessible walkways.",
+        url: "/lpu_photos/lpu-campus-19.jpg"
       },
       {
-        title: "Atrium Elevator & Information Desk",
-        tag: "Accessible Counter",
+        title: "Library Reading Atrium & Stack Floors",
+        tag: "Digital Knowledge Hub",
         verified: true,
-        desc: "Lowered reception counter (780mm) with staff trained in sign language and mobility assistance.",
-        url: "https://images.unsplash.com/photo-1507842229452-772d1c82f0bc?auto=format&fit=crop&w=1000&q=80"
+        desc: "Spacious aisles between book stacks designed for comfortable wheelchair passage.",
+        url: "/lpu_photos/lpu-campus-12.jpg"
       },
       {
-        title: "Braille Reference Section",
-        tag: "Assistive Tech Zone",
+        title: "Approach Plaza & Ramp Transition",
+        tag: "Paved Approach",
         verified: true,
-        desc: "Dedicated tactile reference room on the first floor with screen magnifiers and refreshable braille displays.",
-        url: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1000&q=80"
+        desc: "Broad stone-paved plaza providing direct step-free roll-in access to the turnstile bypass.",
+        url: "/lpu_photos/lpu-campus-7.jpg"
       }
     ]
   },
@@ -160,8 +161,8 @@ const tourFacilities = [
     coordinates: "31.2550° N, 75.7042° E",
     description: "Core administrative hub for student welfare, student council, cultural clubs, scholarship disbursement, and Mittal School of Business.",
     score: 88,
-    panoramaImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=2400&q=85",
-    heroImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1600&q=80",
+    panoramaImage: "/lpu_photos/lpu-campus-14.jpg",
+    heroImage: "/lpu_photos/lpu-campus-14.jpg",
     hotspots: [
       {
         id: "b32-ramp",
@@ -170,7 +171,7 @@ const tourFacilities = [
         yaw: 35,
         pitch: -14,
         desc: "Gentle paved access ramp connecting Block 32 to Central Plaza and Student Food Court.",
-        specs: "Slope: 1:14 (4.1°) • Anti-Slip Flamed Granite • Handrails"
+        specs: "Slope: 1:14 (4.1°) • Anti-Slip Finish • Dual Handrails"
       },
       {
         id: "b32-dsw",
@@ -193,88 +194,25 @@ const tourFacilities = [
     ],
     photos: [
       {
-        title: "DSW Central Facilitation Lobby",
-        tag: "Barrier-Free Atrium",
+        title: "Block 32 Student Welfare & Business Complex",
+        tag: "LPU Punjab Campus",
         verified: true,
-        desc: "Wide central reception hall connecting business wings with zero interior steps.",
-        url: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1000&q=80"
+        desc: "Central student hub building housing DSW, student council desks, and conference arenas.",
+        url: "/lpu_photos/lpu-campus-14.jpg"
       },
       {
-        title: "Corporate Seminar Hall Entrance",
-        tag: "Ramped Tier",
+        title: "Corporate Seminar & Placement Lobby",
+        tag: "Barrier-Free Access",
         verified: true,
-        desc: "Wheelchair tier at the front row with direct audio induction loop for hearing aid users.",
-        url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1000&q=80"
+        desc: "Ground-floor seminar halls equipped with wide doorways and wheelchair seating spots.",
+        url: "/lpu_photos/lpu-campus-13.jpg"
       },
       {
-        title: "Tactile Floor Guidance",
-        tag: "Guiding Path",
+        title: "Central Academic Spine Walkway",
+        tag: "Step-Free Route",
         verified: true,
-        desc: "Continuous directional pavers leading to the scholarship and international affairs counters.",
-        url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80"
-      }
-    ]
-  },
-  {
-    id: "block-38",
-    name: "Block 38 (Computer Applications & Research Labs)",
-    shortLabel: "Block 38 Research",
-    type: "Advanced Computing Wing",
-    coordinates: "31.2558° N, 75.7065° E",
-    description: "Advanced computing facilities, Ph.D. research cubicles, cloud computing clusters, and postgraduate computer science studios.",
-    score: 82,
-    panoramaImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2400&q=85",
-    heroImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80",
-    hotspots: [
-      {
-        id: "b38-ramp",
-        title: "East Entrance Access Ramp",
-        tag: "RPwD Compliant",
-        yaw: 25,
-        pitch: -10,
-        desc: "Direct ramp entrance providing barrier-free entry from the eastern pedestrian tree-lined walkway.",
-        specs: "Slope: 1:12 • Width: 1600mm • High Traction Finish"
-      },
-      {
-        id: "b38-lab",
-        title: "Accessible Research Workstations",
-        tag: "Lab 38-102",
-        yaw: 155,
-        pitch: -6,
-        desc: "Dedicated computing desks featuring adjustable monitor arms and motorized desk height toggles.",
-        specs: "Clear Knee Width: 900mm • USB Access at Desk Level"
-      },
-      {
-        id: "b38-toilet",
-        title: "Unisex Accessible Restroom",
-        tag: "Ground Floor",
-        yaw: 270,
-        pitch: -14,
-        desc: "Spacious roll-in toilet with dual drop-down grab bars and emergency assistance alarm buzzer.",
-        specs: "Door Width: 920mm • Grab Bars: 32mm Diameter Stainless"
-      }
-    ],
-    photos: [
-      {
-        title: "Block 38 Glass Facade & Ramp",
-        tag: "Exterior View",
-        verified: true,
-        desc: "Modern multi-story facade with ramped approach along the eastern perimeter.",
-        url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80"
-      },
-      {
-        title: "Advanced Research Computing Lab",
-        tag: "Step-Free Lab",
-        verified: true,
-        desc: "Spacious aisle spacing allowing wheelchair users to comfortably navigate server racks and benches.",
-        url: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1000&q=80"
-      },
-      {
-        title: "Ground Floor Wide Corridor",
-        tag: "Audited Route",
-        verified: true,
-        desc: "Level corridor connecting Block 38 with Central Library Block 37.",
-        url: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=80"
+        desc: "Paved shaded avenue connecting Block 32 to Central Library and UniMall.",
+        url: "/lpu_photos/lpu-campus-11.jpg"
       }
     ]
   },
@@ -286,8 +224,8 @@ const tourFacilities = [
     coordinates: "31.2530° N, 75.7040° E",
     description: "4-story indoor shopping, stationery, banking, grocery, and multi-cuisine food court serving over 30,000 university students daily.",
     score: 95,
-    panoramaImage: "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?auto=format&fit=crop&w=2400&q=85",
-    heroImage: "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?auto=format&fit=crop&w=1600&q=80",
+    panoramaImage: "/lpu_photos/lpu-campus-3.jpg",
+    heroImage: "/lpu_photos/lpu-campus-3.jpg",
     hotspots: [
       {
         id: "mall-gate",
@@ -319,25 +257,25 @@ const tourFacilities = [
     ],
     photos: [
       {
-        title: "Main Automatic Sliding Entry",
-        tag: "Zero-Threshold Flat Access",
+        title: "UniMall Retail & Dining Complex Exterior",
+        tag: "Campus Commercial Center",
         verified: true,
-        desc: "Flush floor entrance with zero step-up transition, accommodating power wheelchairs and emergency carts.",
-        url: "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?auto=format&fit=crop&w=1000&q=80"
+        desc: "Multi-level red brick and glass commercial complex at the heart of LPU campus life.",
+        url: "/lpu_photos/lpu-campus-3.jpg"
       },
       {
-        title: "Central Atrium Glass Lift",
-        tag: "All Floors Accessible",
+        title: "UniMall Central Atrium & Elevators",
+        tag: "Full Elevator Access",
         verified: true,
-        desc: "Large panoramic glass elevator serving ground, 1st, 2nd, and 3rd-floor food courts.",
-        url: "https://images.unsplash.com/photo-1567449303078-57ad995bd301?auto=format&fit=crop&w=1000&q=80"
+        desc: "Atrium featuring glass passenger elevators connecting all shopping and food floors.",
+        url: "/lpu_photos/lpu-campus-2.jpg"
       },
       {
-        title: "Accessible Food Court Counters",
-        tag: "Lowered Payment Windows",
+        title: "Ground Floor Step-Free Entrance Plaza",
+        tag: "Flush Threshold",
         verified: true,
-        desc: "Food ordering stalls featuring 800mm lowered order and pickup counters.",
-        url: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80"
+        desc: "Paved entrance plaza seamlessly merging with the main campus pedestrian avenue.",
+        url: "/lpu_photos/lpu-campus-4.jpg"
       }
     ]
   },
@@ -347,10 +285,10 @@ const tourFacilities = [
     shortLabel: "Unipolis",
     type: "Mega Amphitheatre & Event Stage",
     coordinates: "31.2520° N, 75.7035° E",
-    description: "The iconic multi-acre covered open-air amphitheatre with grand tensile fabric canopy, hosting university convocations, music concerts, and exhibitions.",
+    description: "The iconic multi-acre covered open-air amphitheatre with grand tensile fabric canopy, hosting university convocations, music concerts, and youth festivals.",
     score: 87,
-    panoramaImage: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=2400&q=85",
-    heroImage: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1600&q=80",
+    panoramaImage: "/lpu_photos/lpu-campus-5.jpg",
+    heroImage: "/lpu_photos/lpu-campus-5.jpg",
     hotspots: [
       {
         id: "unipolis-deck",
@@ -373,101 +311,92 @@ const tourFacilities = [
     ],
     photos: [
       {
-        title: "Unipolis Mega Canopy & Stage",
-        tag: "Grand Venue",
+        title: "Unipolis Grand Tensile Canopy & Stage",
+        tag: "Iconic Mega Venue",
         verified: true,
-        desc: "Tensile fabric canopy providing all-weather shade across the 10,000-seat amphitheatre.",
-        url: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1000&q=80"
+        desc: "Massive architectural fabric canopy providing all-weather shade across the 10,000-capacity arena.",
+        url: "/lpu_photos/lpu-campus-5.jpg"
       },
       {
-        title: "Amphitheatre Barrier-Free Seating",
-        tag: "Level Viewing Deck",
+        title: "Level Amphitheatre Concourse",
+        tag: "Step-Free Deck",
         verified: true,
-        desc: "Designated level concrete bays at mid-tier height offering optimal sightlines without steps.",
-        url: "https://images.unsplash.com/photo-1469488865564-c2de10f69f96?auto=format&fit=crop&w=1000&q=80"
+        desc: "Wide perimeter ring allowing wheelchair users to access front and middle tier viewing areas.",
+        url: "/lpu_photos/lpu-campus-8.jpg"
       },
       {
-        title: "Smooth Asphalt Perimeter Ring",
-        tag: "Zero-Kerb Route",
+        title: "Unipolis Plaza Lighting & Pavement",
+        tag: "Illuminated Path",
         verified: true,
-        desc: "Wide perimeter road connecting directly to Boys Hostels and student food courts.",
-        url: "https://images.unsplash.com/photo-1520645521318-f03a712f0e67?auto=format&fit=crop&w=1000&q=80"
+        desc: "Well-lit paved transit corridor connecting Unipolis to Shanti Devi Auditorium.",
+        url: "/lpu_photos/lpu-campus-9.jpg"
       }
     ]
   },
   {
-    id: "uni-hospital",
-    name: "Block 3 (Uni-Hospital 24/7 Health Center)",
-    shortLabel: "Uni-Hospital",
-    type: "24/7 Healthcare & Trauma",
-    coordinates: "31.2515° N, 75.7075° E",
-    description: "24-hour campus hospital equipped with emergency trauma beds, outpatient consultation rooms, physiotherapy wing, and round-the-clock pharmacy.",
-    score: 96,
-    panoramaImage: "https://images.unsplash.com/photo-1584467735871-8e85353a8413?auto=format&fit=crop&w=2400&q=85",
-    heroImage: "https://images.unsplash.com/photo-1584467735871-8e85353a8413?auto=format&fit=crop&w=1600&q=80",
+    id: "shanti-devi-auditorium",
+    name: "Shanti Devi Mittal Auditorium",
+    shortLabel: "Shanti Devi Aud",
+    type: "Grand Convention Auditorium",
+    coordinates: "31.2525° N, 75.7025° E",
+    description: "Air-conditioned premium multi-tier auditorium for national academic symposia, convocation ceremonies, and cultural mega-events.",
+    score: 93,
+    panoramaImage: "/lpu_photos/lpu-campus-8.jpg",
+    heroImage: "/lpu_photos/lpu-campus-8.jpg",
     hotspots: [
       {
-        id: "hosp-triage",
-        title: "Emergency Ambulance Ramp",
-        tag: "Stretcher Grade",
-        yaw: 0,
-        pitch: -15,
-        desc: "Continuous ramp with zero drop-off, providing direct roll-in access to the trauma ward.",
-        specs: "Width: 2400mm • Direct Bay Access • Heated Handrails"
+        id: "aud-ramp",
+        title: "VIP & Accessible Entrance Ramp",
+        tag: "Covered Ramp",
+        yaw: 20,
+        pitch: -10,
+        desc: "Weather-sheltered ramp providing direct roll-in access to the auditorium main hall.",
+        specs: "Slope: 1:14 • Tactile Landing Studs"
       },
       {
-        id: "hosp-chair",
-        title: "Wheelchair Transit Dispatch",
-        tag: "Free Service",
-        yaw: 130,
-        pitch: -5,
-        desc: "Hospital fleet of standard and motorized wheelchairs available for loan across campus.",
-        specs: "24/7 Attendants Available on Dial"
-      },
-      {
-        id: "hosp-lift",
-        title: "Stretcher-Sized Bed Elevator",
-        tag: "Medical Standard",
-        yaw: 240,
-        pitch: 0,
-        desc: "Heavy-duty bed elevator servicing in-patient rooms on the 2nd and 3rd floors.",
-        specs: "Cab Depth: 2400mm • Priority Medical Override"
+        id: "aud-seating",
+        title: "Dedicated Front Wheelchair Bays",
+        tag: "Wheelchair Seating",
+        yaw: 160,
+        pitch: -4,
+        desc: "Removable front-row auditorium seats accommodating wheelchairs with flush sightlines.",
+        specs: "Audio Induction Loop Connected"
       }
     ],
     photos: [
       {
-        title: "Hospital Entrance & Ambulance Bay",
-        tag: "Flush Stretcher Ramp",
+        title: "Shanti Devi Mittal Auditorium Facade",
+        tag: "Convention Centre",
         verified: true,
-        desc: "Zero-elevation approach designed for emergency gurney and motorized wheelchair transit.",
-        url: "https://images.unsplash.com/photo-1584467735871-8e85353a8413?auto=format&fit=crop&w=1000&q=80"
+        desc: "Grand auditorium entrance plaza with broad accessible flight and parallel side ramps.",
+        url: "/lpu_photos/lpu-campus-8.jpg"
       },
       {
-        title: "Accessible Pharmacy & Triage Desk",
-        tag: "Level Service",
+        title: "Auditorium Main Hall & Stage",
+        tag: "Acoustic Hall",
         verified: true,
-        desc: "Pharmacy dispensing window lowered to 800mm with digital queue token display.",
-        url: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1000&q=80"
+        desc: "Tiered auditorium featuring dedicated ground-level wheelchair bays and hearing assistance systems.",
+        url: "/lpu_photos/lpu-campus-9.jpg"
       },
       {
-        title: "Medical Bed Elevator",
-        tag: "26-Passenger Bed Lift",
+        title: "Exterior Foyer & Portico",
+        tag: "Covered Drop-off",
         verified: true,
-        desc: "High-dimension medical elevator accommodating hospital beds, companions, and attendants.",
-        url: "https://images.unsplash.com/photo-1581056771107-24ca5f033842?auto=format&fit=crop&w=1000&q=80"
+        desc: "Sheltered vehicle drop-off portico allowing direct wheelchair transfer during rains.",
+        url: "/lpu_photos/lpu-campus-6.jpg"
       }
     ]
   },
   {
     id: "indoor-stadium",
     name: "Shanti Devi Mittal Indoor Sports Stadium",
-    shortLabel: "Indoor Sports",
-    type: "Sports Arena & Pool",
+    shortLabel: "Indoor Stadium",
+    type: "Olympic Sports Complex",
     coordinates: "31.2505° N, 75.7005° E",
     description: "Olympic-sized swimming arena, indoor badminton, squash, table tennis, and gymnasium complex equipped with adaptive athletic equipment.",
     score: 86,
-    panoramaImage: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2400&q=85",
-    heroImage: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80",
+    panoramaImage: "/lpu_photos/lpu-campus-10.jpg",
+    heroImage: "/lpu_photos/lpu-campus-10.jpg",
     hotspots: [
       {
         id: "stad-pool",
@@ -490,38 +419,38 @@ const tourFacilities = [
     ],
     photos: [
       {
-        title: "Olympic Indoor Swimming Pool",
-        tag: "Accessible Aquatic Center",
+        title: "Indoor Sports Complex & Stadium Arena",
+        tag: "Sports Infrastructure",
         verified: true,
-        desc: "Temperature-controlled 50-meter pool equipped with certified zero-barrier entry lifts.",
-        url: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=80"
+        desc: "LPU's state-of-the-art multi-sport indoor stadium complex in Punjab.",
+        url: "/lpu_photos/lpu-campus-10.jpg"
       },
       {
-        title: "Badminton Arena Ramped Entry",
-        tag: "Step-Free Court Floor",
+        title: "Athletics Stadium Running Track",
+        tag: "Outdoor Grounds",
         verified: true,
-        desc: "Synthetic court flooring with ramped entrances designed for wheelchair badminton training.",
-        url: "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=1000&q=80"
+        desc: "Synthetic all-weather athletics track and sports fields adjacent to indoor stadium.",
+        url: "/lpu_photos/lpu-campus-11.jpg"
       },
       {
-        title: "Accessible Changing Rooms",
-        tag: "Roll-In Showers",
+        title: "Stadium Ramped Concourse",
+        tag: "Level Approach",
         verified: true,
-        desc: "Spacious roll-in shower stalls with fold-down seats and heavy-duty grab rails.",
-        url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1000&q=80"
+        desc: "Step-free concourse linking sports facilities to Boys Hostels and student cafes.",
+        url: "/lpu_photos/lpu-campus-7.jpg"
       }
     ]
   },
   {
     id: "gate-1",
-    name: "Main Gate 1 (GT Road Highway Entrance)",
+    name: "Main Gate 1 (GT Road National Highway Entrance)",
     shortLabel: "Main Gate 1",
     type: "Campus Portal & Security",
     coordinates: "31.2590° N, 75.7060° E",
     description: "The grand ceremonial entrance gateway to Lovely Professional University along National Highway 1 (GT Road), featuring the central bus and shuttle interchange.",
     score: 90,
-    panoramaImage: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=2400&q=85",
-    heroImage: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1600&q=80",
+    panoramaImage: "/lpu_photos/lpu-campus-1.jpg",
+    heroImage: "/lpu_photos/lpu-campus-1.jpg",
     hotspots: [
       {
         id: "gate-kerb",
@@ -544,38 +473,38 @@ const tourFacilities = [
     ],
     photos: [
       {
-        title: "Gate 1 Highway Portal Arch",
-        tag: "Main Campus Entrance",
+        title: "LPU Main Gate 1 Highway Arch",
+        tag: "Iconic Entrance",
         verified: true,
-        desc: "Grand gateway with dedicated pedestrian walkways isolated from vehicular traffic lanes.",
-        url: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1000&q=80"
+        desc: "The monumental entrance gate on Jalandhar-Delhi GT Road with dedicated pedestrian lanes.",
+        url: "/lpu_photos/lpu-campus-1.jpg"
       },
       {
-        title: "Central E-Shuttle Boarding Bay",
-        tag: "Battery Transit Carts",
+        title: "Administrative Boulevard from Gate 1",
+        tag: "Tree-Lined Avenue",
         verified: true,
-        desc: "Transit interchange providing accessible shuttles to all hostel and academic clusters.",
-        url: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1000&q=80"
+        desc: "Wide concrete sidewalk with tactile ground pavers leading towards Admission Block 1.",
+        url: "/lpu_photos/lpu-campus-2.jpg"
       },
       {
-        title: "Tactile Pedestrian Boulevard",
-        tag: "Guiding Path to Block 1",
+        title: "Central Bus & E-Shuttle Interchange",
+        tag: "Transit Hub",
         verified: true,
-        desc: "Tree-shaded concrete pedestrian boulevard connecting Gate 1 directly to Admission Block 1.",
-        url: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=80"
+        desc: "Covered passenger waiting bays and battery-powered e-rickshaw dispatch area.",
+        url: "/lpu_photos/lpu-campus-4.jpg"
       }
     ]
   },
   {
     id: "hostels",
     name: "Residential Halls (BH & GH Hostel Complexes)",
-    shortLabel: "Hostels Complex",
+    shortLabel: "Hostels Hub",
     type: "Student Residential Hub",
     coordinates: "31.2490° N, 75.7020° E",
     description: "Multistory boys residential complexes (BH-1 to BH-8) and girls residential complexes (GH-1 to GH-6) accommodating over 25,000 resident students.",
     score: 84,
-    panoramaImage: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=2400&q=85",
-    heroImage: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=1600&q=80",
+    panoramaImage: "/lpu_photos/lpu-campus-17.jpg",
+    heroImage: "/lpu_photos/lpu-campus-17.jpg",
     hotspots: [
       {
         id: "hostel-ramp",
@@ -598,25 +527,25 @@ const tourFacilities = [
     ],
     photos: [
       {
-        title: "Hostel Central Quad & Paved Paths",
-        tag: "Courtyard View",
+        title: "Residential Hostel Multi-Storey Towers",
+        tag: "Hostel Complex",
         verified: true,
-        desc: "Interlocking paver walkways connecting residential towers with sports fields and food kiosks.",
-        url: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=1000&q=80"
+        desc: "Iconic multi-story student accommodation towers with landscaped internal quad and sports nets.",
+        url: "/lpu_photos/lpu-campus-17.jpg"
       },
       {
-        title: "Hostel Dining Hall Entry Ramp",
-        tag: "Smooth Access",
+        title: "Girls Hostel Residential Wing",
+        tag: "Secure Residential Area",
         verified: true,
-        desc: "Ramp approach into the student mess hall equipped with dual side rails.",
-        url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1000&q=80"
+        desc: "Secured hostel blocks with paved approach paths and 24/7 security reception.",
+        url: "/lpu_photos/lpu-campus-18.jpg"
       },
       {
-        title: "Hostel Elevator Lobby",
-        tag: "Audited Lifts",
+        title: "Hostel Dining & Student Mess Hall",
+        tag: "Ramped Entrance",
         verified: true,
-        desc: "Passenger elevators serving all upper dormitory floors with emergency power backup.",
-        url: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1000&q=80"
+        desc: "Barrier-free access into the large student mess dining facilities with wide table aisles.",
+        url: "/lpu_photos/lpu-campus-15.jpg"
       }
     ]
   }
@@ -742,17 +671,17 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
             <div className="flex items-center gap-2">
               <h2 className="text-base font-black text-white">LPU 360° Real Campus Visual Tour</h2>
               <span className="px-2.5 py-0.5 rounded-full bg-teal-500/20 text-teal-300 text-[10px] font-extrabold border border-teal-500/30">
-                Native VR Mode
+                LPU Punjab Edition
               </span>
             </div>
             <p className="text-xs text-slate-400">
-              Interactive 360° panoramic walkthrough, real facility photographs, and Google 3D satellite view
+              Interactive 360° panoramic walkthrough, real facility photographs, and official 3D tour
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex bg-slate-800/90 p-1 rounded-xl border border-slate-700/80 text-xs font-bold">
+          <div className="flex bg-slate-800/90 p-1 rounded-xl border border-slate-700/80 text-xs font-bold flex-wrap">
             <button
               onClick={() => setActiveTab("tour360")}
               className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
@@ -761,8 +690,19 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
                   : "text-slate-400 hover:text-white"
               }`}
             >
+              <Globe className="w-3.5 h-3.5" />
+              <span>360° Official Walkthrough</span>
+            </button>
+            <button
+              onClick={() => setActiveTab("nativeVR")}
+              className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
+                activeTab === "nativeVR"
+                  ? "bg-violet-600 text-white shadow-xs"
+                  : "text-slate-400 hover:text-white"
+              }`}
+            >
               <Eye className="w-3.5 h-3.5" />
-              <span>360° Panorama Tour</span>
+              <span>Interactive VR Panorama</span>
             </button>
             <button
               onClick={() => setActiveTab("photos")}
@@ -825,8 +765,44 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
       {/* Main Interactive Stage */}
       <div className="relative w-full flex-1 min-h-[500px] sm:min-h-[620px] bg-black select-none overflow-hidden">
         
-        {/* TAB 1: NATIVE INTERACTIVE 360 PANORAMA */}
+        {/* TAB 1: OFFICIAL 360 WALKTHROUGH (https://iviewd.com/lpu2/) */}
         {activeTab === "tour360" && (
+          <div className="w-full h-full min-h-[500px] sm:min-h-[620px] relative flex flex-col">
+            <iframe
+              src="https://iviewd.com/lpu2/"
+              className="w-full h-full min-h-[500px] sm:min-h-[620px] border-0"
+              title="Official Lovely Professional University 360 Virtual Tour (LPU2)"
+              allow="accelerometer; gyroscope; magnetometer; vr; fullscreen; camera; microphone"
+              loading="lazy"
+            />
+            {/* Top Overlay Badge */}
+            <div className="absolute top-4 left-4 z-10 px-3.5 py-2 rounded-2xl bg-slate-950/90 backdrop-blur-md border border-slate-700 text-white text-xs shadow-xl flex items-center gap-2.5 pointer-events-none">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div>
+                <span className="font-bold text-slate-100">Live LPU Campus 360° Walkthrough</span>
+                <span className="text-[11px] text-slate-400 block -mt-0.5">
+                  Powered by Official LPU2 3D VR Tour • iviewd.com/lpu2/
+                </span>
+              </div>
+            </div>
+
+            {/* Bottom Direct Launch Controls */}
+            <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2">
+              <a
+                href="https://iviewd.com/lpu2/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3.5 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold shadow-xl flex items-center gap-1.5 transition-colors"
+              >
+                <span>Open Direct in Full 360° VR</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 2: NATIVE INTERACTIVE VR PANORAMA ENGINE */}
+        {activeTab === "nativeVR" && (
           <div
             className="w-full h-full min-h-[500px] sm:min-h-[620px] relative flex flex-col cursor-grab active:cursor-grabbing overflow-hidden"
             onMouseDown={handleMouseDown}
@@ -1009,7 +985,7 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
           </div>
         )}
 
-        {/* TAB 2: REAL PHOTO AUDITS */}
+        {/* TAB 3: REAL PHOTO AUDITS (LPU PUNJAB CAMPUS) */}
         {activeTab === "photos" && (
           <div className="w-full h-full p-4 sm:p-6 overflow-y-auto bg-slate-950 space-y-6">
             <div className="relative rounded-2xl overflow-hidden border border-slate-800 aspect-[21/9] min-h-[220px] max-h-[340px]">
@@ -1039,10 +1015,10 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
                 <div>
                   <h4 className="text-base font-bold text-white flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                    Verified Photographic Accessibility Audits
+                    Verified LPU Punjab Architectural Audits
                   </h4>
                   <p className="text-xs text-slate-400">
-                    High-resolution ground truth photographs confirming physical ramp angles, lift door widths, and step-free doors.
+                    High-resolution ground truth photographs confirming physical ramp angles, lift door widths, and step-free doors across LPU.
                   </p>
                 </div>
                 <span className="px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-bold border border-slate-700">
@@ -1085,7 +1061,7 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
           </div>
         )}
 
-        {/* TAB 3: GOOGLE 3D SATELLITE MAP */}
+        {/* TAB 4: GOOGLE 3D SATELLITE MAP */}
         {activeTab === "satellite" && (
           <div className="w-full h-full min-h-[500px] sm:min-h-[620px] relative flex flex-col">
             <iframe
