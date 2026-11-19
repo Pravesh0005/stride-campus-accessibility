@@ -135,3 +135,4 @@ export function findShortestPath(startId, endId, onlyStepFree = true) {
 ## 6. Conclusion
 
 By shifting from naive distance minimization to barrier-weighted impedance minimization, Stride guarantees that recommended routes are physically traversable by every student at Lovely Professional University, preventing wheelchair entrapment and dangerous detour loops.
+

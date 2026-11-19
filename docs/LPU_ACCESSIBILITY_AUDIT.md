@@ -73,3 +73,4 @@ The campus-wide average accessibility score was measured at **74%**, with 21 fac
 2. **Resurface Block 13 Heavy Workshop Entrances**: Install cast-iron threshold ramps over the 4-inch kerb to enable wheelchair students to reach manufacturing labs safely.
 3. **Automate Fire Safety Double Doors in Block 25 & 34**: Fit magnetic door holders and handicap push-plates to eliminate heavy door drag forces.
 4. **Deploy Stride QR Placards**: Affix Stride scan plates at all 52 building entrance portals so students can immediately view verified ramp directions and live elevator alerts.
+
