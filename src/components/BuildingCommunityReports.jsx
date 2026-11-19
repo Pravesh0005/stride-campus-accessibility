@@ -136,3 +136,4 @@ export default function BuildingCommunityReports({ buildingId, buildingName }) {
     </div>
   )
 }
+

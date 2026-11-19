@@ -6,6 +6,7 @@ import Footer from "@/components/Footer"
 import AccessibilityScore from "@/components/AccessibilityScore"
 import StatusBadge from "@/components/StatusBadge"
 import BuildingCommunityReports from "@/components/BuildingCommunityReports"
+import BuildingChecklist from "@/components/BuildingChecklist"
 import Link from "next/link"
 import {
   ArrowLeft,
@@ -139,51 +140,8 @@ export default async function BuildingPage({ params }) {
               </div>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
-              <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-violet-100 text-violet-700 flex items-center justify-center font-bold">
-                    <ShieldCheck className="w-4 h-4" />
-                  </div>
-                  <h2 className="text-lg font-black text-slate-900">Accessibility Infrastructure Checklist</h2>
-                </div>
-                <span className="text-xs font-bold text-slate-400">Field Audited</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {accessibilityFeatures.map(feature => {
-                  const isElevator = feature.id === "elevator"
-                  const val = a[feature.id]
-
-                  return (
-                    <div
-                      key={feature.id}
-                      className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 hover:bg-slate-100/60 transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-xl shrink-0">{feature.icon}</span>
-                        <div>
-                          <div className="text-xs font-bold text-slate-800">{feature.label}</div>
-                          <div className="text-[10px] text-slate-400">
-                            {val ? "Verified on premises" : "Not equipped"}
-                          </div>
-                        </div>
-                      </div>
-
-                      {isElevator && val ? (
-                        <StatusBadge
-                          status={a.elevatorWorking}
-                          label={a.elevatorWorking ? "Working" : "Out of Service"}
-                          warning={!a.elevatorWorking}
-                        />
-                      ) : (
-                        <StatusBadge status={!!val} label={val ? "Available" : "Missing"} />
-                      )}
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
+            {/* Interactive Dynamic Infrastructure Checklist (Synchronized with 2-Lift Standard & Live Student Reports) */}
+            <BuildingChecklist building={building} accessibilityFeatures={accessibilityFeatures} />
 
             {/* Live Student Community Reports with Uploaded Photos */}
             <BuildingCommunityReports buildingId={building.id} buildingName={building.name} />

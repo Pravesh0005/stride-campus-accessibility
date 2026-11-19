@@ -121,3 +121,4 @@ export function getReportsForBuilding(buildingId) {
   if (!buildingId) return all
   return all.filter(r => r.buildingId === buildingId)
 }
+
