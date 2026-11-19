@@ -23,13 +23,15 @@ Stride solves this through:
 
 ---
 
-## 👥 Engineering Team & Contributions
+## 👥 Engineering Team & Full-Stack Contributions
 
-| Name | Registration No. | Role & Core Contributions |
-| :--- | :--- | :--- |
-| **Pravesh** *(Lead)* | **12419500** | **Team Lead & Core Engine Architect**<br>• Designed the weighted Dijkstra routing algorithm avoiding steep kerbs and steps.<br>• Architected the multi-tab 360° VR inspection module integrating `iviewd.com/lpu2/` and native equirectangular canvas with sensor controls.<br>• Implemented dynamic waypoint sequence generation and accessibility penalty matrix.<br>• Directed end-to-end system architecture, state management, and academic documentation. |
-| **Kartik Grewal** | **12406604** | **Geodata & Network Mapping Lead**<br>• Geographically mapped all 52 LPU campus blocks, hostels (BH-1 to BH-8, GH-1 to GH-6), and amenities into a connected topological graph.<br>• Built the 2D interactive SVG campus map canvas with category filters and real-time path highlighting.<br>• Conducted physical ground surveys of pathway surface textures and corridor widths across the 600-acre campus. |
-| **Konatala Naveen** | **12417251** | **Full-Stack & Audit Lead**<br>• Implemented the institutional accessibility scoring engine and facility scorecard matrix.<br>• Developed the crowdsourced live barrier feed with category tagging and status updates.<br>• Designed Next.js server actions, local persistence layer, and REST API endpoints for barrier submissions. |
+All three team members contributed comprehensively to **both Frontend UI development and Backend / Algorithmic engineering**:
+
+| Team Member | Registration No. | Frontend Contributions | Backend & Algorithmic Contributions |
+| :--- | :--- | :--- | :--- |
+| **Pravesh** *(Lead)* | **12419500** | • **360° VR Tour & Panorama Engine** (`src/components/Campus360Viewer.jsx`, `/tour`) with equirectangular canvas, sensor compass HUD, and multi-tab viewer.<br>• **Google OAuth Sign-in Modal & Profile UI** (`src/components/GoogleSignInModal.jsx`, `/profile`).<br>• **Hero Simulation & Navigation Layout** (`src/components/HeroSection.jsx`). | • **Core Dijkstra Pathfinding Algorithm** (`src/lib/pathfinding.js`) with gradient friction, step exclusion, and impedance weighting.<br>• **Dynamic Routing REST API** (`src/app/api/routes/route.js`).<br>• **Google OAuth State Bus & Persistence** (`src/lib/auth.js`). |
+| **Kartik Grewal** | **12406604** | • **2D Interactive SVG Campus Map** (`src/components/CampusMap.jsx`, `/explore`) with zoom/pan vector navigation and dynamic route path highlighting.<br>• **Step-by-Step Route Comparison Cards** (`src/components/RouteCard.jsx`).<br>• **Campus Facility Cards & Filter HUD** (`src/components/BuildingCard.jsx`). | • **Campus Graph & Topological Modeling** (`src/lib/campusData.js`): Mapped 52 facilities & 70+ corridors on a normalized planar coordinate grid.<br>• **Corridor Spatial Distance & Surface Friction Calculator** (`src/lib/utils.js`).<br>• **Facilities Registry REST API** (`src/app/api/buildings/route.js`). |
+| **Konatala Naveen** | **12417251** | • **Barrier Reporting Form with 5MB Photo Upload** (`src/app/report/page.js`) and live card preview confirmation.<br>• **Student Live Wire Community Feed** (`src/app/feed/page.js`, `FeedPost.jsx`) with photo lightbox modal.<br>• **Dynamic 2-Lift Checklist & Photo Proofs** (`src/components/BuildingChecklist.jsx`, `/buildings/[slug]`). | • **Persistent Client Storage Bus & Event Pipeline** (`src/lib/reportsStorage.js`).<br>• **Barrier Ingestion & Verification REST API** (`src/app/api/reports/route.js`).<br>• **Institutional Accessibility Scoring Algorithm** (Ramp 35%, Lift 25%, Door 20%, WC 20%). |
 
 ---
 
