@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import { buildings, barrierTypes, severityLevels } from "@/lib/campusData"
 import { saveReport } from "@/lib/reportsStorage"
+import { getCurrentUser } from "@/lib/auth"
 import { 
   AlertTriangle, 
   CheckCircle, 
@@ -53,6 +54,17 @@ export default function ReportPage() {
   const [submittedReport, setSubmittedReport] = useState(null)
   const [error, setError] = useState("")
   const [errors, setErrors] = useState({})
+  
+  const [currentUser, setCurrentUser] = useState(null)
+  const [reporterName, setReporterName] = useState("Pravesh (12419500)")
+
+  useEffect(() => {
+    const user = getCurrentUser()
+    setCurrentUser(user)
+    if (user && user.isLoggedIn) {
+      setReporterName(user.name + (user.regNo ? ` (${user.regNo})` : ""))
+    }
+  }, [])
 
   const fileInputRef = useRef(null)
 
@@ -165,8 +177,9 @@ export default function ReportPage() {
       severityLabel: selectedSeverity ? selectedSeverity.label : form.severity,
       description: form.description.trim(),
       locationDetails: form.locationDetails.trim(),
-      photo: photoData || (selectedBuilding ? `/lpu_photos/lpu-campus-${((selectedBuilding.name.length % 19) + 1)}.jpg` : null),
-      author: "You (Student Contributor)",
+      photo: photoData || null,
+      author: reporterName.trim() || currentUser?.name || "Pravesh (12419500)",
+      userEmail: currentUser?.email || "pravesh.12419500@lpu.in",
       timestamp: new Date().toISOString(),
       likes: 1,
       status: "active",
@@ -521,6 +534,29 @@ export default function ReportPage() {
                 placeholder="e.g. Ground floor north ramp entrance, next to faculty parking"
                 className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-600 transition-all"
               />
+            </div>
+
+            {/* 7. Reporter Identity Attribution */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
+                  7. Submitting Student Name & ID <span className="text-red-500">*</span>
+                </label>
+                <span className="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5" /> Google Verified Student
+                </span>
+              </div>
+              <input
+                type="text"
+                value={reporterName}
+                onChange={e => setReporterName(e.target.value)}
+                placeholder="e.g. Pravesh (12419500)"
+                required
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-600 transition-all"
+              />
+              <p className="text-[11px] text-slate-400 mt-1">
+                Your verified name will be shown publicly across the community feed and building audit scorecards.
+              </p>
             </div>
 
             {error && (

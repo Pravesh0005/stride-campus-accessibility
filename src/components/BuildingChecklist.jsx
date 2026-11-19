@@ -25,28 +25,22 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
     setLightbox({ url, title })
   }
 
-  // Find reports matching specific feature types
-  const liftReport = reports.find(r => 
-    r.barrierType === "lift" || 
-    (r.description && /lift|elevator/i.test(r.description))
-  )
+  // Find reports matching specific feature types strictly by barrierType
+  const liftReport = reports.find(r => r.barrierType === "lift")
 
   const rampReport = reports.find(r => 
     r.barrierType === "ramp" || 
     r.barrierType === "step" || 
-    r.barrierType === "kerb" || 
-    (r.description && /ramp|kerb|step/i.test(r.description))
+    r.barrierType === "kerb"
   )
 
   const entranceReport = reports.find(r => 
     r.barrierType === "entrance" || 
-    r.barrierType === "automatic_door" || 
-    (r.description && /entrance|door|threshold/i.test(r.description))
+    r.barrierType === "automatic_door"
   )
 
   const washroomReport = reports.find(r => 
-    r.barrierType === "washroom" || 
-    (r.description && /washroom|toilet|restroom/i.test(r.description))
+    r.barrierType === "washroom"
   )
 
   return (
@@ -262,3 +256,4 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
     </>
   )
 }
+
