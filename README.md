@@ -1,0 +1,139 @@
+# Stride — Accessible Campus Movement & Navigation System
+> **Lovely Professional University (LPU Punjab) • Capstone Project (Problem P12: "The Ramp That Ends at a Step")**
+
+[![Next.js 16](https://img.shields.io/badge/Next.js-16.0-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![React 19](https://img.shields.io/badge/React-19.0-61dafb?style=flat&logo=react)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38bdf8?style=flat&logo=tailwindcss)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Accessibility Score](https://img.shields.io/badge/Campus%20Audited-52%20Blocks-success)](#)
+
+---
+
+## 📌 Project Overview
+
+**Stride** is an institutional campus navigation and accessibility audit platform engineered specifically for the 600-acre campus of **Lovely Professional University (LPU Punjab, Phagwara)**. 
+
+Standard map providers (such as Google Maps or Apple Maps) calculate walking directions assuming able-bodied pedestrians—frequently directing wheelchair users, students on crutches, and mobility-impaired individuals into 6-inch kerbs, unramped plinths, broken lifts, or steep staircases. 
+
+Stride solves this through:
+1. **Barrier-Aware Dijkstra Routing Engine**: Computes verified step-free corridors across 52 university facilities and 70+ interconnected paths.
+2. **Official LPU2 360° Virtual Reality Pre-Trip Inspection**: Direct integration with the official LPU virtual tour (`iviewd.com/lpu2/`), native 360 equirectangular panorama viewer with interactive accessibility hotspots, and real photographic audits.
+3. **Crowdsourced Live Barrier Wire**: Real-time reporting engine allowing students and security marshals to flag sudden construction ditches, lift outages, or blocked ramps in seconds.
+4. **Institutional Accessibility Dashboard**: Quantitative scorecard rating each campus facility (0–100) based on ramp gradients, automatic door clearances, tactile ground surface indicators (TGSI), and accessible washroom availability.
+
+---
+
+## 👥 Engineering Team & Contributions
+
+| Name | Registration No. | Role & Core Contributions |
+| :--- | :--- | :--- |
+| **Pravesh** *(Lead)* | **12419500** | **Team Lead & Core Engine Architect**<br>• Designed the weighted Dijkstra routing algorithm avoiding steep kerbs and steps.<br>• Architected the multi-tab 360° VR inspection module integrating `iviewd.com/lpu2/` and native equirectangular canvas with sensor controls.<br>• Implemented dynamic waypoint sequence generation and accessibility penalty matrix.<br>• Directed end-to-end system architecture, state management, and academic documentation. |
+| **Kartik Grewal** | **12406604** | **Geodata & Network Mapping Lead**<br>• Geographically mapped all 52 LPU campus blocks, hostels (BH-1 to BH-8, GH-1 to GH-6), and amenities into a connected topological graph.<br>• Built the 2D interactive SVG campus map canvas with category filters and real-time path highlighting.<br>• Conducted physical ground surveys of pathway surface textures and corridor widths across the 600-acre campus. |
+| **Konatala Naveen** | **12417251** | **Full-Stack & Audit Lead**<br>• Implemented the institutional accessibility scoring engine and facility scorecard matrix.<br>• Developed the crowdsourced live barrier feed with category tagging and status updates.<br>• Designed Next.js server actions, local persistence layer, and REST API endpoints for barrier submissions. |
+
+---
+
+## 🚀 Key Features
+
+### 1. Step-Free Campus Routing (Weighted Dijkstra)
+- Evaluates the campus network graph $G = (V, E)$ where vertices represent 52 campus facilities and edges represent verified walkways.
+- Edge weights factor physical distance, ramp gradient slope penalty, surface texture resistance, and real-time obstacle flags:
+  $$W_{eff} = D \times \left(1 + \frac{\text{slopePenalty}}{100} + \frac{\text{surfacePenalty}}{100}\right) + B_{\text{penalty}}$$
+- Guarantees true zero-step navigation between academic blocks (e.g., Block 34 to Block 37 Central Library, UniMall, and residential hostels).
+
+### 2. 360° Immersive Inspection & Photographic Audits
+- **Official LPU2 Walkthrough**: Powered by `https://iviewd.com/lpu2/` for an official, high-definition 360° tour of university corridors.
+- **Native 360° Panorama Viewer**: High-performance canvas engine with touch-drag, mouse-look, compass orientation HUD, FOV zooming (50°–105°), and auto-rotation.
+- **Interactive Accessibility Hotspots**: Clickable floating markers in 3D space detailing ramp slopes (e.g., 1:12 slope compliance), automatic sensor door widths (950mm), and lift elevator statuses.
+- **Real Photo Audits**: Authentic ground-truth photography of Lovely Professional University facilities.
+- **Live Google 3D Satellite Layer**: High-resolution overhead satellite inspection.
+
+### 3. Institutional Accessibility Matrix
+- Audits 52 facilities across 4 major accessibility dimensions:
+  - **Ramp Compliance (35%)**: 1:12 slope standard, handrail provision, non-skid surface.
+  - **Elevator Reliability (25%)**: Operating state, braille buttons, voice floor annunciators.
+  - **Entrance Usability (20%)**: Automatic sensor sliding doors or low-effort push doors, zero threshold lip.
+  - **Sanitary Accessibility (20%)**: Grab rails, wheel-in turning radius $\ge 1500\text{mm}$.
+- Generates transparent institutional grades (e.g., *Certified Accessible*, *Moderate Barriers*, *Action Required*).
+
+### 4. Real-Time Student Barrier Reporting
+- Instant community dispatch system allowing students to report temporary hazards:
+  - 🚧 Construction ditch or trenching
+  - 🛑 Broken lift / elevator maintenance
+  - ⚠️ Steep unramped kerb / temporary stage blocking pathway
+  - 💧 Waterlogged pathway or slick tiles
+
+---
+
+## 🗺️ Campus Network Coverage
+
+Stride maps **52 major landmarks and facilities** across Lovely Professional University:
+
+- **Central Administrative & Gateway**: Gate 1, Gate 2, Gate 3, Gate 4, Block 1 (Admission & Central Admin), Block 2 (Examination Dept).
+- **Academic Complexes**: 
+  - Block 30 (Mathematics & Basic Sciences)
+  - Block 32 (Division of Student Welfare - DSW & Mittal School of Business)
+  - Block 34 (School of Computer Science & Engineering - CSE)
+  - Block 35 (School of Architecture & Design)
+  - Block 36 (School of Electronics & Communication)
+  - Block 37 (Iconic 5-Story Central Library)
+  - Block 38 (School of Computer Applications & Ph.D. Research Wing)
+  - Blocks 3, 4, 13, 14, 25, 26, 27, 28, 29, 31, 33, 55, 56
+- **Student Life & Amenities**: UniMall, Student Activity Center (Robopark), Uni-Hospital (24/7 Medical Wing), Shanti Devi Mittal Auditorium, Baldev Raj Mittal Unipolis, Open Air Theatre (OAT), Food Courts.
+- **Sports & Recreation**: Main Sports Stadium, Multi-Purpose Turf, Indoor Sports Arena.
+- **Residential Zones**: Boys Hostels (BH-1 through BH-8), Girls Hostels (GH-1 through GH-6), Faculty Apartments.
+
+---
+
+## 🛠️ Tech Stack & Architecture
+
+- **Framework**: Next.js 16 (App Router, Turbopack)
+- **Frontend Library**: React 19
+- **Styling**: Tailwind CSS v4, Lucide React Icons
+- **Mapping & VR**: HTML5 Canvas 2D Vector Graph, Krpano / iViewD 360 Engine (`iviewd.com/lpu2/`), Google Earth / Satellite API
+- **State Management**: React `useState`, `useCallback`, `useMemo`, `useRef` with client-side local caching
+- **Build Pipeline**: Static site prerendering (SSG) with dynamic client interaction
+
+---
+
+## 💻 Getting Started
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18.17.0 or higher recommended)
+- `npm` or `yarn`
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Pravesh0005/stride-campus-accessibility.git
+   cd stride-campus-accessibility
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Building for Production
+```bash
+npm run build
+npm run start
+```
+
+---
+
+## 📄 Deliverables & Academic Documentation
+
+The complete project report and presentation deck are available in the repository documentation directory:
+- 📄 **Academic Project Report (PDF)**: Comprehensive 16-page technical report adhering to academic formatting standards.
+- 📝 **Project Report (DOCX)**: Editable Word document with complete mathematical formulations, system diagrams, and test logs.
+- 📊 **Presentation Deck (PPTX)**: High-impact 10-slide capstone presentation for committee evaluation.
+
+---
+
+## 📜 License
+This project is licensed under the MIT License - see the LICENSE file for details.
