@@ -1,20 +1,12 @@
-/**
- * @module BuildingChecklist
- * @author Konatala Naveen (Reg. No. 12417251) — Full-Stack Audit & Community Lead
- * @coauthor Pravesh (Reg. No. 12419500) — Team Lead & Core Engine Architect
- * @subsystem Institutional Audit & Community Subsystem
- * @description Dynamic 2-lift per block status indicator and crowdsourced obstacle verification with photo proof.
- */
-
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { getReportsForBuilding } from "@/lib/reportsStorage"
-import { ShieldCheck, Camera, AlertTriangle, Check, X, ZoomIn } from "lucide-react"
+import { ShieldCheck, Camera, AlertTriangle, Check, X } from "lucide-react"
 
 export default function BuildingChecklist({ building, accessibilityFeatures }) {
   const [reports, setReports] = useState([])
-  const [lightbox, setLightbox] = useState(null) // { url, title }
+  const [lightbox, setLightbox] = useState(null)
 
   const a = building.accessibility || {}
 
@@ -27,29 +19,37 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
     return () => window.removeEventListener("stride:report_added", load)
   }, [building.id])
 
-  // Helper to open lightbox
-  const openPhoto = (url, title) => {
+  const openPhoto = useCallback((url, title) => {
     if (!url) return
     setLightbox({ url, title })
-  }
+  }, [])
 
-  // Find reports matching specific feature types strictly by barrierType
-  const liftReport = reports.find(r => r.barrierType === "lift")
+  const closeLightbox = useCallback(() => {
+    setLightbox(null)
+  }, [])
 
-  const rampReport = reports.find(r => 
-    r.barrierType === "ramp" || 
-    r.barrierType === "step" || 
-    r.barrierType === "kerb"
-  )
+  const liftReport = useMemo(() => {
+    return reports.find(r => r.barrierType === "lift")
+  }, [reports])
 
-  const entranceReport = reports.find(r => 
-    r.barrierType === "entrance" || 
-    r.barrierType === "automatic_door"
-  )
+  const rampReport = useMemo(() => {
+    return reports.find(r => 
+      r.barrierType === "ramp" || 
+      r.barrierType === "step" || 
+      r.barrierType === "kerb"
+    )
+  }, [reports])
 
-  const washroomReport = reports.find(r => 
-    r.barrierType === "washroom"
-  )
+  const entranceReport = useMemo(() => {
+    return reports.find(r => 
+      r.barrierType === "entrance" || 
+      r.barrierType === "automatic_door"
+    )
+  }, [reports])
+
+  const washroomReport = useMemo(() => {
+    return reports.find(r => r.barrierType === "washroom")
+  }, [reports])
 
   return (
     <>
@@ -79,10 +79,8 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
             let photoUrl = null
             let iconState = null
 
-            // 1. ELEVATOR LOGIC (LPU blocks have 2 lifts per block)
             if (feature.id === "elevator") {
               if (liftReport) {
-                // Check if user specifically stated "both lifts" or "all lifts"
                 const isBoth = /\b(both|all|neither|2\s*lifts?|two\s*lifts?|both\s*elevators?)\b/i.test(liftReport.description || "")
                 
                 if (isBoth) {
@@ -91,7 +89,6 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
                   badgeStyle = "bg-red-50 text-red-700 border-red-200"
                   iconState = <AlertTriangle className="w-3 h-3 text-red-600" />
                 } else {
-                  // LPU standard: 2 lifts in block, 1 not working unless specified both
                   label = "1 Lift Not Working"
                   sublabel = "1 Lift Operational (2 total in block)"
                   badgeStyle = "bg-amber-50 text-amber-700 border-amber-200"
@@ -109,9 +106,7 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
                 badgeStyle = "bg-slate-100 text-slate-600 border-slate-200"
                 iconState = <X className="w-3 h-3 text-slate-400" />
               }
-            } 
-            // 2. RAMP LOGIC
-            else if (feature.id === "ramp") {
+            } else if (feature.id === "ramp") {
               if (rampReport) {
                 label = "Ramp Issue Reported"
                 sublabel = rampReport.barrierLabel || "Obstacle flagged"
@@ -129,9 +124,7 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
                 badgeStyle = "bg-slate-100 text-slate-600 border-slate-200"
                 iconState = <X className="w-3 h-3 text-slate-400" />
               }
-            }
-            // 3. ENTRANCE LOGIC
-            else if (feature.id === "accessibleEntrance") {
+            } else if (feature.id === "accessibleEntrance") {
               if (entranceReport) {
                 label = "Entrance Issue"
                 sublabel = entranceReport.barrierLabel || "Threshold issue"
@@ -149,9 +142,7 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
                 badgeStyle = "bg-slate-100 text-slate-600 border-slate-200"
                 iconState = <X className="w-3 h-3 text-slate-400" />
               }
-            }
-            // 4. WASHROOM LOGIC
-            else if (feature.id === "accessibleWashroom") {
+            } else if (feature.id === "accessibleWashroom") {
               if (washroomReport) {
                 label = "Washroom Issue"
                 sublabel = washroomReport.barrierLabel || "Unavailable"
@@ -169,9 +160,7 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
                 badgeStyle = "bg-slate-100 text-slate-600 border-slate-200"
                 iconState = <X className="w-3 h-3 text-slate-400" />
               }
-            }
-            // 5. OTHER FEATURES (Tactile, Braille, etc.)
-            else {
+            } else {
               const val = a[feature.id]
               if (val) {
                 label = "Available"
@@ -206,7 +195,6 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
                   </span>
                 </div>
 
-                {/* PHOTO PROOF BUTTON IF REPORT PERSON UPLOADED A PHOTO */}
                 {photoUrl && (
                   <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between">
                     <span className="text-[10px] font-semibold text-rose-700 flex items-center gap-1">
@@ -229,11 +217,10 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
         </div>
       </div>
 
-      {/* Lightbox Modal */}
       {lightbox && (
         <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4"
-          onClick={() => setLightbox(null)}
+          onClick={closeLightbox}
         >
           <div
             className="relative max-w-3xl w-full bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl"
@@ -245,7 +232,7 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
                 <span className="text-[10px] text-slate-400">Photo Proof uploaded by reporting student</span>
               </div>
               <button
-                onClick={() => setLightbox(null)}
+                onClick={closeLightbox}
                 className="w-7 h-7 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-colors"
               >
                 <X className="w-4 h-4" />
@@ -264,4 +251,3 @@ export default function BuildingChecklist({ building, accessibilityFeatures }) {
     </>
   )
 }
-

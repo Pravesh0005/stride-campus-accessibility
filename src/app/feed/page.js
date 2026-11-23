@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import FeedPost from "@/components/FeedPost"
@@ -63,14 +63,12 @@ export default function FeedPage() {
   const [showForm, setShowForm] = useState(false)
   const [filterType, setFilterType] = useState("all")
 
-  // Photo attachment states for in-feed posting
   const [feedPhoto, setFeedPhoto] = useState(null)
   const [feedPhotoMeta, setFeedPhotoMeta] = useState(null)
   const [feedPhotoError, setFeedPhotoError] = useState("")
   const fileInputRef = useRef(null)
 
-  // Load persistent reports and tips on mount and listen to changes
-  const loadAllPosts = () => {
+  const loadAllPosts = useCallback(() => {
     const storedReports = getStoredReports().map(r => ({
       ...r,
       type: r.type || "report",
@@ -78,7 +76,6 @@ export default function FeedPage() {
       building: r.buildingName,
     }))
 
-    // Merge stored reports and tips, deduplicating by ID
     const map = new Map()
     storedReports.forEach(p => map.set(p.id, p))
     initialTipsAndUpdates.forEach(p => {
@@ -89,7 +86,7 @@ export default function FeedPage() {
       (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
     )
     setPosts(combined)
-  }
+  }, [])
 
   useEffect(() => {
     loadAllPosts()
@@ -100,10 +97,9 @@ export default function FeedPage() {
 
     window.addEventListener("stride:report_added", handleReportAdded)
     return () => window.removeEventListener("stride:report_added", handleReportAdded)
-  }, [])
+  }, [loadAllPosts])
 
-  // File handling for in-feed posting
-  const handlePhotoSelect = (e) => {
+  const handlePhotoSelect = useCallback((e) => {
     setFeedPhotoError("")
     const file = e.target.files?.[0]
     if (!file) return
@@ -114,7 +110,7 @@ export default function FeedPage() {
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      setFeedPhotoError("File size exceeds 5MB limit.")
+      setFeedPhotoError("Image exceeds 5MB limit.")
       return
     }
 
@@ -127,40 +123,44 @@ export default function FeedPage() {
       })
     }
     reader.readAsDataURL(file)
-  }
+  }, [])
 
-  const removeFeedPhoto = () => {
+  const removeFeedPhoto = useCallback(() => {
     setFeedPhoto(null)
     setFeedPhotoMeta(null)
     setFeedPhotoError("")
     if (fileInputRef.current) fileInputRef.current.value = ""
-  }
+  }, [])
 
-  const handlePost = (e) => {
+  const handlePost = useCallback((e) => {
     e.preventDefault()
     if (!content.trim()) return
+
     setPosting(true)
 
     setTimeout(() => {
-      const bObj = buildings.find(b => b.id === building)
+      const selectedB = buildings.find(b => b.id === building)
+      const bName = selectedB ? selectedB.name : (building || "General Campus Corridor")
+
       const newPost = {
-        id: `post-${generateId()}`,
-        author: "You (Student Contributor)",
+        id: generateId("post"),
+        buildingId: building || "general",
+        buildingName: bName,
+        author: "Pravesh (Lead Contributor)",
         content: content.trim(),
         description: content.trim(),
         timestamp: new Date().toISOString(),
-        likes: 0,
-        building: bObj ? bObj.name : null,
-        buildingName: bObj ? bObj.name : null,
-        buildingId: building || null,
-        type,
-        photo: feedPhoto || null,
-        barrierLabel: type === "report" ? "Community Barrier Dispatch" : null,
+        likes: 1,
+        building: bName,
+        type: type,
+        barrierType: type === "report" ? "pathway" : null,
+        barrierLabel: type === "report" ? "Student Flagged Barrier" : null,
         severity: type === "report" ? "medium" : null,
+        severityLabel: type === "report" ? "Medium Priority" : null,
+        photo: feedPhoto || null,
         status: "active",
       }
 
-      // If it's a barrier report, also save to persistent reports store
       if (type === "report") {
         saveReport(newPost)
       } else {
@@ -174,13 +174,16 @@ export default function FeedPage() {
       setPosting(false)
       setShowForm(false)
     }, 350)
-  }
+  }, [content, building, type, feedPhoto, removeFeedPhoto])
 
-  const filtered = filterType === "all"
-    ? posts
-    : posts.filter(p => p.type === filterType)
+  const filtered = useMemo(() => {
+    if (filterType === "all") return posts
+    return posts.filter(p => p.type === filterType)
+  }, [posts, filterType])
 
-  const photoCount = posts.filter(p => p.photo || p.image).length
+  const photoCount = useMemo(() => {
+    return posts.filter(p => p.photo || p.image).length
+  }, [posts])
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
@@ -222,7 +225,6 @@ export default function FeedPage() {
 
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-8 space-y-6">
         
-        {/* Banner with Stats */}
         <div className="bg-white rounded-2xl border border-slate-200/90 p-4 flex items-center justify-between flex-wrap gap-4 text-xs font-bold text-slate-700">
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -240,7 +242,6 @@ export default function FeedPage() {
           </Link>
         </div>
 
-        {/* Share an Update / Report Form */}
         {showForm && (
           <form onSubmit={handlePost} className="bg-white rounded-3xl border-2 border-violet-500/60 shadow-xl p-6 sm:p-8 space-y-4">
             <h3 className="text-base font-black text-slate-900">Post an Update or Observation</h3>
@@ -274,7 +275,6 @@ export default function FeedPage() {
               className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-600 transition-all resize-none"
             />
 
-            {/* Photo Attachment Row */}
             <div>
               {!feedPhoto ? (
                 <div className="flex items-center gap-3">
@@ -341,7 +341,6 @@ export default function FeedPage() {
           </form>
         )}
 
-        {/* Filter Navigation */}
         <div className="flex items-center justify-between gap-4 flex-wrap pb-2 border-b border-slate-200/80">
           <div className="flex items-center gap-1.5 overflow-x-auto">
             {[
@@ -369,7 +368,6 @@ export default function FeedPage() {
           </span>
         </div>
 
-        {/* Posts List */}
         <div className="space-y-4">
           {filtered.map(post => (
             <FeedPost key={post.id} post={post} />

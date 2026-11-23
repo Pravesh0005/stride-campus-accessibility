@@ -1,3 +1,6 @@
+"use client"
+
+import { useState, useCallback, useMemo } from "react"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import AccessibilityScore from "@/components/AccessibilityScore"
@@ -15,16 +18,27 @@ import {
   ShieldCheck,
   Compass,
   Layers,
-  ArrowUpRight
+  ArrowUpRight,
+  Filter
 } from "lucide-react"
 
 export default function DashboardPage() {
-  const avg = getAverageAccessibilityScore()
-  const fully = buildings.filter(b => b.accessibility.score >= 80).length
-  const needsAttn = buildings.filter(b => b.accessibility.score < 50).length
-  const sorted = [...buildings].sort((a, b) => a.accessibility.score - b.accessibility.score)
+  const [categoryFilter, setCategoryFilter] = useState("all")
+  const [sortOrder, setSortOrder] = useState("score-asc")
 
-  const statCards = [
+  const handleCategoryChange = useCallback((cat) => {
+    setCategoryFilter(cat)
+  }, [])
+
+  const handleSortChange = useCallback((sort) => {
+    setSortOrder(sort)
+  }, [])
+
+  const avg = useMemo(() => getAverageAccessibilityScore(), [])
+  const fully = useMemo(() => buildings.filter(b => b.accessibility.score >= 80).length, [])
+  const needsAttn = useMemo(() => buildings.filter(b => b.accessibility.score < 50).length, [])
+
+  const statCards = useMemo(() => [
     {
       label: "Campus Buildings",
       value: buildings.length,
@@ -53,7 +67,22 @@ export default function DashboardPage() {
       color: "from-red-500 to-rose-600",
       sub: "Score <50 • Traps wheelchair users",
     },
-  ]
+  ], [avg, fully, needsAttn])
+
+  const filteredBuildings = useMemo(() => {
+    let list = [...buildings]
+    if (categoryFilter !== "all") {
+      list = list.filter(b => b.type === categoryFilter)
+    }
+    if (sortOrder === "score-asc") {
+      list.sort((a, b) => a.accessibility.score - b.accessibility.score)
+    } else if (sortOrder === "score-desc") {
+      list.sort((a, b) => b.accessibility.score - a.accessibility.score)
+    } else if (sortOrder === "name") {
+      list.sort((a, b) => a.name.localeCompare(b.name))
+    }
+    return list
+  }, [categoryFilter, sortOrder])
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
@@ -101,22 +130,51 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        {/* Live Field Reports & Photo Evidence from Students */}
         <DashboardRecentAlerts />
 
         <div>
-          <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-200/80">
+          <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-200/80 flex-wrap gap-3">
             <div>
               <h2 className="text-xl font-black text-slate-900">Campus Facilities Matrix</h2>
-              <p className="text-xs text-slate-500 mt-0.5">Prioritized by vulnerability (most urgent obstacles first)</p>
+              <p className="text-xs text-slate-500 mt-0.5">Filter and sort {filteredBuildings.length} evaluated facilities</p>
             </div>
-            <span className="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">
-              Lowest Scores First
-            </span>
+            
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 text-xs">
+                {[
+                  { id: "all", label: "All" },
+                  { id: "academic", label: "Academic" },
+                  { id: "residential", label: "Hostels" },
+                  { id: "amenity", label: "Amenities" },
+                ].map(cat => (
+                  <button
+                    key={cat.id}
+                    onClick={() => handleCategoryChange(cat.id)}
+                    className={`px-2.5 py-1 rounded-lg font-bold transition-all ${
+                      categoryFilter === cat.id
+                        ? "bg-violet-600 text-white shadow-2xs"
+                        : "text-slate-600 hover:text-slate-900"
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+
+              <select
+                value={sortOrder}
+                onChange={(e) => handleSortChange(e.target.value)}
+                className="px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 focus:outline-none"
+              >
+                <option value="score-asc">Lowest Scores First</option>
+                <option value="score-desc">Highest Scores First</option>
+                <option value="name">Alphabetical</option>
+              </select>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sorted.map(b => {
+            {filteredBuildings.map(b => {
               const a = b.accessibility
               return (
                 <Link key={b.id} href={`/buildings/${b.slug}`} className="block group">

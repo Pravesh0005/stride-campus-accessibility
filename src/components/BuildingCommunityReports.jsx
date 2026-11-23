@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { getReportsForBuilding } from "@/lib/reportsStorage"
 import { ShieldAlert, Camera, MapPin, AlertTriangle, ZoomIn, X, Clock } from "lucide-react"
 import { timeAgo } from "@/lib/utils"
@@ -20,6 +20,17 @@ export default function BuildingCommunityReports({ buildingId, buildingName }) {
     return () => window.removeEventListener("stride:report_added", load)
   }, [buildingId])
 
+  const openPhoto = useCallback((photoUrl, title) => {
+    if (!photoUrl) return
+    setLightboxPhoto({ url: photoUrl, title })
+  }, [])
+
+  const closePhoto = useCallback(() => {
+    setLightboxPhoto(null)
+  }, [])
+
+  const reportCount = useMemo(() => reports.length, [reports])
+
   if (reports.length === 0) return null
 
   return (
@@ -31,7 +42,7 @@ export default function BuildingCommunityReports({ buildingId, buildingName }) {
           </div>
           <div>
             <h2 className="text-base font-black text-rose-950">
-              Student Crowdsourced Field Alerts ({reports.length})
+              Student Crowdsourced Field Alerts ({reportCount})
             </h2>
             <p className="text-xs text-rose-800">
               Real-time obstacle reports with photo proof submitted by campus students:
@@ -58,49 +69,58 @@ export default function BuildingCommunityReports({ buildingId, buildingName }) {
                 </span>
               </div>
               <span className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase ${
-                r.severity === "high" || r.severity === "critical"
-                  ? "bg-red-100 text-red-700"
-                  : "bg-amber-100 text-amber-700"
+                r.severity === "high"
+                  ? "bg-rose-100 text-rose-700"
+                  : r.severity === "medium"
+                  ? "bg-amber-100 text-amber-700"
+                  : "bg-slate-100 text-slate-700"
               }`}>
                 {r.severityLabel || r.severity}
               </span>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3.5 items-start">
-              {r.photo && (
-                <div
-                  onClick={() => setLightboxPhoto(r.photo)}
-                  className="w-full sm:w-36 aspect-[4/3] rounded-xl overflow-hidden bg-slate-900 shrink-0 border border-slate-200 relative group cursor-pointer"
-                >
-                  <img
-                    src={r.photo}
-                    alt={r.barrierLabel || "Obstacle photo"}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-bold gap-1">
-                    <ZoomIn className="w-3.5 h-3.5" /> Enlarge
-                  </div>
-                  <div className="absolute bottom-1 left-1 px-1.5 py-0.5 rounded bg-black/75 text-white text-[8px] font-bold flex items-center gap-0.5">
-                    <Camera className="w-2.5 h-2.5" /> Photo
-                  </div>
-                </div>
-              )}
-
-              <div className="flex-1 space-y-1.5">
-                <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>{r.barrierLabel || "Campus Obstacle"}</span>
-                </div>
-                <p className="text-xs text-slate-700 leading-relaxed">
-                  {r.description || r.content}
-                </p>
+            <div className="flex items-start gap-2.5">
+              <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <div>
+                <h4 className="text-xs font-bold text-slate-900">{r.barrierLabel}</h4>
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">{r.description}</p>
                 {r.locationDetails && (
-                  <div className="text-[11px] text-slate-500 font-medium">
-                    <span className="font-bold text-slate-700">Specific spot:</span> {r.locationDetails}
-                  </div>
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    <span className="font-semibold text-slate-500">Specific spot:</span> {r.locationDetails}
+                  </p>
                 )}
               </div>
             </div>
+
+            {r.photo && (
+              <div className="pt-2 border-t border-rose-100 flex items-center justify-between">
+                <div
+                  onClick={() => openPhoto(r.photo, `${buildingName || "Building"} — ${r.barrierLabel}`)}
+                  className="relative group rounded-xl overflow-hidden border border-rose-200 cursor-pointer w-24 h-16 bg-slate-900 shrink-0"
+                >
+                  <img
+                    src={r.photo}
+                    alt={r.barrierLabel}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200"
+                  />
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ZoomIn className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="absolute bottom-1 left-1 px-1 py-0.5 rounded bg-black/70 text-[8px] font-bold text-white flex items-center gap-0.5">
+                    <Camera className="w-2.5 h-2.5" /> Photo
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => openPhoto(r.photo, `${buildingName || "Building"} — ${r.barrierLabel}`)}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
+                >
+                  <Camera className="w-3.5 h-3.5" />
+                  <span>Inspect Photo Proof</span>
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -108,25 +128,28 @@ export default function BuildingCommunityReports({ buildingId, buildingName }) {
       {lightboxPhoto && (
         <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4"
-          onClick={() => setLightboxPhoto(null)}
+          onClick={closePhoto}
         >
           <div
             className="relative max-w-3xl w-full bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl"
             onClick={e => e.stopPropagation()}
           >
             <div className="p-4 bg-slate-950 flex items-center justify-between text-white border-b border-slate-800">
-              <span className="text-xs font-bold">Field Photographic Proof • {buildingName}</span>
+              <div>
+                <span className="text-xs font-bold text-slate-100 block">{lightboxPhoto.title}</span>
+                <span className="text-[10px] text-slate-400">Photo Proof uploaded by reporting student</span>
+              </div>
               <button
-                onClick={() => setLightboxPhoto(null)}
-                className="w-7 h-7 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center"
+                onClick={closePhoto}
+                className="w-7 h-7 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
             <div className="p-2 flex items-center justify-center bg-black">
               <img
-                src={lightboxPhoto}
-                alt="Obstacle full preview"
+                src={lightboxPhoto.url}
+                alt="Obstacle photographic proof"
                 className="max-h-[70vh] w-auto max-w-full object-contain rounded-lg"
               />
             </div>
@@ -136,4 +159,3 @@ export default function BuildingCommunityReports({ buildingId, buildingName }) {
     </div>
   )
 }
-

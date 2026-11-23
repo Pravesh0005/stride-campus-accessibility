@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import GoogleSignInModal from "@/components/GoogleSignInModal"
@@ -45,7 +45,7 @@ export default function ProfilePage() {
   const [showGoogleModal, setShowGoogleModal] = useState(false)
   const [myReports, setMyReports] = useState([])
   
-  // Form states
+  
   const [name, setName] = useState("")
   const [regNo, setRegNo] = useState("")
   const [email, setEmail] = useState("")
@@ -55,7 +55,7 @@ export default function ProfilePage() {
   const [needs, setNeeds] = useState([])
   const [saved, setSaved] = useState(false)
 
-  const loadUserData = () => {
+  const loadUserData = useCallback(() => {
     const u = getCurrentUser()
     setUser(u)
     setName(u.name || "")
@@ -65,7 +65,6 @@ export default function ProfilePage() {
     setHostel(u.hostel || "")
     setPhone(u.phone || "")
 
-    // Filter reports matching user's name
     const allReports = getStoredReports()
     const mine = allReports.filter(r => 
       (r.author && (r.author.includes(u.name) || r.author.includes(u.regNo))) ||
@@ -73,19 +72,18 @@ export default function ProfilePage() {
     )
     setMyReports(mine)
 
-    // Load stored needs preferences
     const storedNeeds = localStorage.getItem("stride_profile_needs")
     if (storedNeeds) {
       try { setNeeds(JSON.parse(storedNeeds)) } catch (e) {}
     } else {
       setNeeds(["wheelchair"])
     }
-  }
+  }, [])
 
   useEffect(() => {
     loadUserData()
 
-    const handleAuthChange = (e) => {
+    const handleAuthChange = () => {
       loadUserData()
     }
 
@@ -95,17 +93,17 @@ export default function ProfilePage() {
       window.removeEventListener("stride:auth_state_changed", handleAuthChange)
       window.removeEventListener("stride:report_added", loadUserData)
     }
-  }, [])
+  }, [loadUserData])
 
-  const toggleNeed = (id) => {
+  const toggleNeed = useCallback((id) => {
     setNeeds(prev => {
       const updated = prev.includes(id) ? prev.filter(n => n !== id) : [...prev, id]
       localStorage.setItem("stride_profile_needs", JSON.stringify(updated))
       return updated
     })
-  }
+  }, [])
 
-  const handleSaveProfile = (e) => {
+  const handleSaveProfile = useCallback((e) => {
     e.preventDefault()
     const updated = updateProfile({
       name: name.trim(),
@@ -117,12 +115,12 @@ export default function ProfilePage() {
     setUser(updated)
     setSaved(true)
     setTimeout(() => setSaved(false), 3000)
-  }
+  }, [name, regNo, department, hostel, phone])
 
-  const handleSignOut = () => {
+  const handleSignOut = useCallback(() => {
     signOut()
     loadUserData()
-  }
+  }, [loadUserData])
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
@@ -166,10 +164,10 @@ export default function ProfilePage() {
 
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 space-y-10">
         
-        {/* ROW 1: DIGITAL STUDENT ID CARD & GOOGLE AUTH STATUS */}
+        
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* LPU STUDENT IDENTITY SMART CARD (5 COLS) */}
+          
           <div className="lg:col-span-5">
             <div className="text-xs font-black uppercase tracking-wider text-slate-500 mb-2 flex items-center justify-between">
               <span>LPU Student Smart Card</span>
@@ -179,7 +177,7 @@ export default function ProfilePage() {
             </div>
 
             <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-slate-900 via-violet-950 to-slate-950 text-white p-6 shadow-2xl border border-slate-700/80 space-y-5">
-              {/* Card Header */}
+              
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 text-slate-950 font-black text-sm flex items-center justify-center shadow-md">
@@ -195,7 +193,7 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              {/* Photo & Key Information */}
+              
               <div className="flex items-center gap-4">
                 <div className="relative w-20 h-24 rounded-2xl overflow-hidden bg-slate-800 border-2 border-white/20 shrink-0 shadow-lg">
                   <img
@@ -225,7 +223,7 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              {/* Card Footer with Security Chip & Barcode */}
+              
               <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[9px] text-slate-400 font-mono">
                 <div>
                   <div>VALID: 2024 — 2028</div>
@@ -243,10 +241,10 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* GOOGLE OAUTH CONNECTION & PROFILE DETAILS (7 COLS) */}
+          
           <div className="lg:col-span-7 space-y-6">
             
-            {/* Google OAuth Banner */}
+            
             <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center gap-3.5 min-w-0">
                 <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center shrink-0 shadow-xs">
@@ -277,7 +275,7 @@ export default function ProfilePage() {
               </button>
             </div>
 
-            {/* Editable Profile Information Form */}
+            
             <form onSubmit={handleSaveProfile} className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-5">
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <h3 className="text-base font-black text-slate-900">Student Profile Information</h3>
@@ -355,7 +353,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* ROW 2: ACCESSIBILITY PREFERENCES */}
+        
         <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100 flex-wrap gap-2">
             <div>
@@ -402,7 +400,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* ROW 3: MY SUBMITTED BARRIER REPORTS */}
+        
         <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-5">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100 flex-wrap gap-2">
             <div>
@@ -472,7 +470,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* ROW 4: ENGINEERING TEAM & SUBSYSTEM FULL-STACK OWNERSHIP */}
+        
         <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100 flex-wrap gap-2">
             <div>
@@ -492,7 +490,7 @@ export default function ProfilePage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* 1. PRAVESH (LEAD) */}
+            
             <div className="rounded-2xl border-2 border-violet-500/40 bg-gradient-to-b from-violet-50/50 to-white p-5 space-y-4 shadow-sm flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -532,7 +530,7 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            {/* 2. KARTIK GREWAL */}
+            
             <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4 shadow-xs flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -572,7 +570,7 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            {/* 3. KONATALA NAVEEN */}
+            
             <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4 shadow-xs flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -618,7 +616,7 @@ export default function ProfilePage() {
 
       <Footer />
 
-      {/* Google Sign-in Modal */}
+      
       <GoogleSignInModal
         isOpen={showGoogleModal}
         onClose={() => setShowGoogleModal(false)}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo, useEffect, useCallback } from "react"
 import { buildings } from "@/lib/campusData"
 import { findAllPaths } from "@/lib/pathfinding"
 import { getStoredReports } from "@/lib/reportsStorage"
@@ -51,7 +51,7 @@ export default function ExplorePage() {
     return () => window.removeEventListener("stride:report_added", loadReports)
   }, [])
 
-  const handleFindRoute = (e) => {
+  const handleFindRoute = useCallback((e) => {
     if (e) e.preventDefault()
     if (!fromBuilding || !toBuilding || fromBuilding === toBuilding) return
 
@@ -63,11 +63,20 @@ export default function ExplorePage() {
     setRouteResults(filtered.length > 0 ? filtered : results)
     setHighlightedPath(filtered[0] || results[0] || null)
     setShowResults(true)
-  }
+  }, [fromBuilding, toBuilding, accessibleOnly])
 
-  const handleBuildingSelect = (id) => {
-    setSelectedBuilding(id === selectedBuilding ? null : id)
-  }
+  const handleBuildingSelect = useCallback((id) => {
+    setSelectedBuilding(prev => prev === id ? null : id)
+  }, [])
+
+  const openPreviewPhoto = useCallback((url, title) => {
+    if (!url) return
+    setPreviewPhoto({ url, title })
+  }, [])
+
+  const closePreviewPhoto = useCallback(() => {
+    setPreviewPhoto(null)
+  }, [])
 
   const selectedBuildingData = useMemo(() => {
     return buildings.find(b => b.id === selectedBuilding)
@@ -175,7 +184,6 @@ export default function ExplorePage() {
                   </button>
                 </div>
 
-                {/* Show any active barrier report for this selected building */}
                 {communityReports.filter(r => r.buildingId === selectedBuilding).map(rep => (
                   <div key={rep.id} className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex flex-col sm:flex-row gap-3 items-start">
                     {rep.photo && (
@@ -328,7 +336,6 @@ export default function ExplorePage() {
               </div>
             )}
 
-            {/* LIVE COMMUNITY BARRIER ALERTS & PHOTO PROOFS */}
             <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
@@ -436,7 +443,6 @@ export default function ExplorePage() {
         </div>
       </main>
 
-      {/* Lightbox Modal for Photo Proofs */}
       {previewPhoto && (
         <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4"

@@ -1,10 +1,3 @@
-/**
- * @module Campus360Viewer
- * @author Pravesh (Reg. No. 12419500) — Team Lead & Core Engine Architect
- * @subsystem Core Routing, VR & Auth Subsystem
- * @description Multi-mode 360° virtual reality inspection engine (LPU2 Walkthrough, VR Equirectangular, Audits, Satellite).
- */
-
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
@@ -668,7 +661,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
         isFullscreen ? "h-screen rounded-none" : ""
       }`}
     >
-      {/* Top Header Bar */}
       <div className="p-4 bg-slate-900 border-b border-slate-800 flex flex-wrap items-center justify-between gap-4 z-20">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-violet-600 to-teal-500 text-white flex items-center justify-center font-bold shadow-md shadow-violet-500/20">
@@ -744,11 +736,7 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
           </button>
         </div>
       </div>
-
-      {/* Main Interactive Stage */}
       <div className="relative w-full flex-1 min-h-[500px] sm:min-h-[620px] bg-black select-none overflow-hidden">
-        
-        {/* TAB 1: OFFICIAL 360 WALKTHROUGH (https://iviewd.com/lpu2/) */}
         {activeTab === "tour360" && (
           <div className="w-full h-full min-h-[500px] sm:min-h-[620px] relative flex flex-col">
             <iframe
@@ -758,7 +746,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
               allow="accelerometer; gyroscope; magnetometer; vr; fullscreen; camera; microphone"
               loading="lazy"
             />
-            {/* Top Overlay Badge */}
             <div className="absolute top-4 left-4 z-10 px-3.5 py-2 rounded-2xl bg-slate-950/90 backdrop-blur-md border border-slate-700 text-white text-xs shadow-xl flex items-center gap-2.5 pointer-events-none">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
               <div>
@@ -768,8 +755,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
                 </span>
               </div>
             </div>
-
-            {/* Bottom Direct Launch Controls */}
             <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2">
               <a
                 href="https://iviewd.com/lpu2/"
@@ -783,8 +768,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
             </div>
           </div>
         )}
-
-        {/* TAB 2: NATIVE INTERACTIVE VR PANORAMA ENGINE */}
         {activeTab === "nativeVR" && (
           <div
             className="w-full h-full min-h-[500px] sm:min-h-[620px] relative flex flex-col cursor-grab active:cursor-grabbing overflow-hidden"
@@ -796,7 +779,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Equirectangular Panorama Canvas Background */}
             <div
               className="absolute inset-0 transition-transform duration-75 ease-out"
               style={{
@@ -808,13 +790,9 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
                 filter: "brightness(0.96) contrast(1.05)"
               }}
             />
-
-            {/* Gradient Overlays for Vignette Depth */}
             <div className="absolute inset-0 pointer-events-none bg-radial-vignette opacity-50" />
             <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-slate-950/80 to-transparent pointer-events-none" />
             <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/90 to-transparent pointer-events-none" />
-
-            {/* Top-Left Status HUD */}
             <div className="absolute top-4 left-4 z-10 flex flex-col gap-2 pointer-events-none">
               <div className="px-3.5 py-2 rounded-2xl bg-slate-950/90 backdrop-blur-md border border-slate-700 text-white text-xs shadow-xl flex items-center gap-2.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -830,8 +808,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
                   </span>
                 </div>
               </div>
-
-              {/* Dynamic Rotating Compass HUD */}
               <div className="self-start px-3 py-1.5 rounded-xl bg-slate-900/80 backdrop-blur-md border border-slate-800 text-xs text-slate-300 flex items-center gap-2 shadow-lg">
                 <div
                   className="w-5 h-5 rounded-full border border-slate-600 flex items-center justify-center transition-transform duration-100"
@@ -846,8 +822,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
                 <span className="text-slate-400 text-[11px]">FOV: {fov}°</span>
               </div>
             </div>
-
-            {/* Interactive Hotspots floating in 360 space */}
             {facility.hotspots?.map(hs => {
               const deltaYaw = ((hs.yaw - yaw + 540) % 360) - 180
               const isVisible = Math.abs(deltaYaw) < fov * 0.65
@@ -879,8 +853,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
                 </div>
               )
             })}
-
-            {/* Selected Hotspot Inspection Modal Card */}
             {selectedHotspot && (
               <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-30 w-[90%] max-w-md p-4 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-violet-500/50 shadow-2xl text-white animate-in fade-in slide-in-from-bottom-4">
                 <div className="flex items-start justify-between gap-3 mb-2">
@@ -911,8 +883,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
                 </div>
               </div>
             )}
-
-            {/* Bottom Controls Bar */}
             <div className="absolute bottom-4 inset-x-4 z-20 flex items-center justify-between gap-3 pointer-events-auto">
               <div className="flex items-center gap-2 bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-2xl border border-slate-700 shadow-xl">
                 <button
@@ -967,8 +937,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
             </div>
           </div>
         )}
-
-        {/* TAB 3: REAL PHOTO AUDITS (LPU PUNJAB CAMPUS) */}
         {activeTab === "photos" && (
           <div className="w-full h-full p-4 sm:p-6 overflow-y-auto bg-slate-950 space-y-6">
             <div className="relative rounded-2xl overflow-hidden border border-slate-800 aspect-[21/9] min-h-[220px] max-h-[340px]">
@@ -1043,8 +1011,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
             </div>
           </div>
         )}
-
-        {/* TAB 4: GOOGLE 3D SATELLITE MAP */}
         {activeTab === "satellite" && (
           <div className="w-full h-full min-h-[500px] sm:min-h-[620px] relative flex flex-col">
             <iframe
@@ -1074,8 +1040,6 @@ export default function Campus360Viewer({ initialScene = "block-34" }) {
           </div>
         )}
       </div>
-
-      {/* Lightbox Modal for Photo Inspection */}
       {lightboxPhoto && (
         <div
           className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"

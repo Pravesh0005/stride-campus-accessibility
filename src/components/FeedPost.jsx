@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { Heart, MapPin, CheckCircle2, ShieldAlert, Lightbulb, AlertTriangle, Eye, X, ZoomIn } from "lucide-react"
 import { timeAgo } from "@/lib/utils"
 
@@ -9,32 +9,46 @@ export default function FeedPost({ post }) {
   const [likeCount, setLikeCount] = useState(post.likes || 0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
 
-  const toggleLike = () => {
-    setLiked(!liked)
-    setLikeCount(prev => liked ? prev - 1 : prev + 1)
-  }
+  const toggleLike = useCallback(() => {
+    setLiked(prevLiked => {
+      setLikeCount(prevCount => prevLiked ? prevCount - 1 : prevCount + 1)
+      return !prevLiked
+    })
+  }, [])
 
-  const initial = post.author ? post.author.charAt(0).toUpperCase() : "U"
+  const openLightbox = useCallback(() => {
+    setLightboxOpen(true)
+  }, [])
 
-  let typeBadge = (
-    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-violet-100 text-violet-800">
-      <Lightbulb className="w-3 h-3 text-violet-600" /> Tip
-    </span>
-  )
+  const closeLightbox = useCallback(() => {
+    setLightboxOpen(false)
+  }, [])
 
-  if (post.type === "report" || post.barrierType) {
-    typeBadge = (
-      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-800">
-        <ShieldAlert className="w-3 h-3 text-red-600" /> Barrier Report
+  const initial = useMemo(() => {
+    return post.author ? post.author.charAt(0).toUpperCase() : "U"
+  }, [post.author])
+
+  const typeBadge = useMemo(() => {
+    if (post.type === "report" || post.barrierType) {
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-800">
+          <ShieldAlert className="w-3 h-3 text-red-600" /> Barrier Report
+        </span>
+      )
+    }
+    if (post.type === "update" || post.status === "resolved") {
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+          <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Resolution
+        </span>
+      )
+    }
+    return (
+      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-violet-100 text-violet-800">
+        <Lightbulb className="w-3 h-3 text-violet-600" /> Tip
       </span>
     )
-  } else if (post.type === "update" || post.status === "resolved") {
-    typeBadge = (
-      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
-        <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Resolution
-      </span>
-    )
-  }
+  }, [post.type, post.barrierType, post.status])
 
   const postImage = post.photo || post.image
 
@@ -60,7 +74,7 @@ export default function FeedPost({ post }) {
                       ? "bg-rose-100 text-rose-700"
                       : post.severity === "medium"
                       ? "bg-amber-100 text-amber-700"
-                      : "bg-blue-100 text-blue-700"
+                      : "bg-slate-100 text-slate-600"
                   }`}>
                     {post.severity}
                   </span>
@@ -70,62 +84,51 @@ export default function FeedPost({ post }) {
             </div>
 
             {post.barrierLabel && (
-              <div className="text-xs font-bold text-slate-900 mb-1 flex items-center gap-1.5">
-                <AlertTriangle className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+              <div className="text-xs font-bold text-slate-800 mb-1 flex items-center gap-1">
+                <AlertTriangle className="w-3 h-3 text-amber-500 shrink-0" />
                 <span>{post.barrierLabel}</span>
               </div>
             )}
 
-            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed mt-1">
-              {post.content || post.description}
+            <p className="text-slate-700 text-sm leading-relaxed mb-3">
+              {post.content}
             </p>
 
-            {post.locationDetails && (
-              <div className="text-[11px] text-slate-500 font-medium mt-1.5 flex items-center gap-1">
-                <span className="font-bold text-slate-600">Location:</span> {post.locationDetails}
-              </div>
-            )}
-
-            {/* Photo Attachment with Click to Zoom */}
             {postImage && (
-              <div className="mt-3.5 relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-900 group cursor-pointer max-w-lg aspect-[16/9]">
+              <div className="mb-3 rounded-xl overflow-hidden border border-slate-200 bg-slate-900 relative group max-w-md">
                 <img
                   src={postImage}
-                  alt={post.barrierLabel || "Reported campus barrier obstacle"}
-                  className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300"
-                  onClick={() => setLightboxOpen(true)}
+                  alt={post.barrierLabel || "Field report obstacle"}
+                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+                  onClick={openLightbox}
                 />
-                <div 
-                  onClick={() => setLightboxOpen(true)}
-                  className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-bold text-xs backdrop-blur-xs"
+                <button
+                  type="button"
+                  onClick={openLightbox}
+                  className="absolute bottom-2 right-2 px-2.5 py-1 rounded-lg bg-black/70 hover:bg-black text-white text-[10px] font-bold flex items-center gap-1 backdrop-blur-xs transition-colors cursor-pointer"
                 >
-                  <ZoomIn className="w-4 h-4" />
-                  <span>Click to view full photo</span>
-                </div>
-                <div className="absolute bottom-2 left-2 px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md text-white text-[10px] font-bold flex items-center gap-1.5 pointer-events-none">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  <span>Verified Photo Proof</span>
-                </div>
+                  <Eye className="w-3 h-3" />
+                  <span>Inspect Proof</span>
+                </button>
               </div>
             )}
 
-            <div className="flex items-center justify-between mt-3.5 pt-3 border-t border-slate-100">
-              {(post.building || post.buildingName) ? (
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md">
-                  <MapPin className="w-3 h-3 text-violet-600" />
-                  {post.building || post.buildingName}
-                </span>
-              ) : <span />}
+            <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500">
+              <span className="flex items-center gap-1 font-semibold text-slate-600">
+                <MapPin className="w-3.5 h-3.5 text-violet-600 shrink-0" />
+                <span>{post.building}</span>
+              </span>
 
               <button
+                type="button"
                 onClick={toggleLike}
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
                   liked
-                    ? "bg-rose-50 text-rose-600"
-                    : "text-slate-500 hover:bg-slate-100 hover:text-slate-700"
+                    ? "bg-rose-50 text-rose-600 font-bold"
+                    : "hover:bg-slate-100 text-slate-500"
                 }`}
               >
-                <Heart className={`w-3.5 h-3.5 ${liked ? "fill-rose-500 text-rose-500" : ""}`} />
+                <Heart className={`w-3.5 h-3.5 ${liked ? "fill-rose-600 text-rose-600" : ""}`} />
                 <span>{likeCount}</span>
               </button>
             </div>
@@ -133,47 +136,37 @@ export default function FeedPost({ post }) {
         </div>
       </div>
 
-      {/* Lightbox Modal */}
-      {lightboxOpen && (
-        <div 
+      {lightboxOpen && postImage && (
+        <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4"
-          onClick={() => setLightboxOpen(false)}
+          onClick={closeLightbox}
         >
-          <div 
-            className="relative max-w-4xl w-full bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl"
+          <div
+            className="relative max-w-3xl w-full bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl"
             onClick={e => e.stopPropagation()}
           >
-            <div className="p-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between text-white">
+            <div className="p-4 bg-slate-950 flex items-center justify-between text-white border-b border-slate-800">
               <div>
-                <div className="font-bold text-sm text-slate-100">
-                  {post.barrierLabel || "Field Photographic Evidence"}
-                </div>
-                <div className="text-xs text-slate-400">
-                  {post.building || post.buildingName} • Reported by {post.author}
-                </div>
+                <span className="text-xs font-bold text-slate-100 block">
+                  {post.barrierLabel || post.building || "Photographic Evidence"}
+                </span>
+                <span className="text-[10px] text-slate-400">
+                  Uploaded by {post.author} • {timeAgo(post.timestamp)}
+                </span>
               </div>
               <button
-                onClick={() => setLightboxOpen(false)}
-                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-colors"
+                onClick={closeLightbox}
+                className="w-7 h-7 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
-            <div className="max-h-[75vh] flex items-center justify-center bg-black p-2">
+            <div className="p-2 flex items-center justify-center bg-black">
               <img
                 src={postImage}
-                alt="Obstacle full preview"
+                alt="Obstacle proof full view"
                 className="max-h-[70vh] w-auto max-w-full object-contain rounded-lg"
               />
-            </div>
-            <div className="p-3 bg-slate-950 text-slate-300 text-xs flex items-center justify-between">
-              <span>{post.content || post.description}</span>
-              <button
-                onClick={() => setLightboxOpen(false)}
-                className="px-3 py-1 rounded-lg bg-slate-800 text-white font-bold hover:bg-slate-700"
-              >
-                Close
-              </button>
             </div>
           </div>
         </div>

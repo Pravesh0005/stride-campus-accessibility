@@ -1,10 +1,3 @@
-/**
- * @module PathfindingEngine
- * @author Pravesh (Reg. No. 12419500) — Team Lead & Core Engine Architect
- * @subsystem Core Routing, VR & Auth Subsystem
- * @description Weighted Dijkstra pathfinding engine with gradient impedance and step-exclusion filtering.
- */
-
 import { buildings, routes } from "./campusData"
 
 function buildGraph(accessibleOnly) {
@@ -124,4 +117,3 @@ export function getConnectedBuildings(buildingId) {
       barriers: r.barriers
     }))
 }
-

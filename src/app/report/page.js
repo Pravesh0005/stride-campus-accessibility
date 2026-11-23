@@ -25,10 +25,9 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 
-const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024 // 5 MB
+const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/jpg"]
 
-// Sample photos for quick preview / demo testing
 const SAMPLE_PHOTOS = [
   { label: "Broken Ramp (North Wing)", url: "/lpu_photos/lpu-campus-5.jpg" },
   { label: "Unpaved Gravel Track", url: "/lpu_photos/lpu-campus-7.jpg" },
@@ -44,8 +43,8 @@ export default function ReportPage() {
     locationDetails: "",
   })
   
-  const [photoData, setPhotoData] = useState(null) // base64 string or url
-  const [photoMeta, setPhotoMeta] = useState(null) // { name, size, type }
+  const [photoData, setPhotoData] = useState(null) 
+  const [photoMeta, setPhotoMeta] = useState(null) 
   const [photoError, setPhotoError] = useState("")
   const [isDragging, setIsDragging] = useState(false)
   
@@ -68,19 +67,19 @@ export default function ReportPage() {
 
   const fileInputRef = useRef(null)
 
-  // Validate File on selection
+  
   const processFile = (file) => {
     setPhotoError("")
 
     if (!file) return
 
-    // Type validation
+    
     if (!ALLOWED_TYPES.includes(file.type)) {
       setPhotoError("Invalid file type. Only JPG, PNG, and WEBP images are supported.")
       return
     }
 
-    // Size validation (Max 5MB)
+    
     if (file.size > MAX_FILE_SIZE_BYTES) {
       const sizeMB = (file.size / (1024 * 1024)).toFixed(2)
       setPhotoError(`File is too large (${sizeMB} MB). Maximum allowed size is 5 MB.`)
@@ -186,10 +185,10 @@ export default function ReportPage() {
     }
 
     try {
-      // 1. Save to client persistent storage (so it shows everywhere immediately)
+      
       saveReport(payload)
 
-      // 2. Also send to API endpoint
+      
       await fetch("/api/reports", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -246,7 +245,7 @@ export default function ReportPage() {
               </p>
             </div>
 
-            {/* LIVE PREVIEW OF SUBMITTED CARD */}
+            
             <div className="bg-slate-50 rounded-2xl border border-slate-200 p-5 space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-2 border-b border-slate-200/80 pb-3">
                 <div className="flex items-center gap-2">
@@ -292,7 +291,7 @@ export default function ReportPage() {
               </div>
             </div>
 
-            {/* ACTION BUTTONS TO VERIFY IN APP */}
+            
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
               <Link
                 href="/feed"
@@ -317,7 +316,7 @@ export default function ReportPage() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-10 space-y-7">
-            {/* 1. Affected Campus Building */}
+            
             <div>
               <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
                 1. Affected Campus Building <span className="text-red-500">*</span>
@@ -337,7 +336,7 @@ export default function ReportPage() {
               {errors.buildingId && <p className="text-red-500 text-xs font-semibold mt-1.5">{errors.buildingId}</p>}
             </div>
 
-            {/* 2. Nature of Barrier */}
+            
             <div>
               <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
                 2. Nature of Barrier <span className="text-red-500">*</span>
@@ -362,7 +361,7 @@ export default function ReportPage() {
               {errors.barrierType && <p className="text-red-500 text-xs font-semibold mt-1.5">{errors.barrierType}</p>}
             </div>
 
-            {/* 3. Severity Level */}
+            
             <div>
               <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
                 3. Severity Level <span className="text-red-500">*</span>
@@ -390,7 +389,7 @@ export default function ReportPage() {
               {errors.severity && <p className="text-red-500 text-xs font-semibold mt-1.5">{errors.severity}</p>}
             </div>
 
-            {/* 4. Description */}
+            
             <div>
               <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
                 4. Description of Obstacle <span className="text-red-500">*</span>
@@ -407,7 +406,7 @@ export default function ReportPage() {
               {errors.description && <p className="text-red-500 text-xs font-semibold mt-1.5">{errors.description}</p>}
             </div>
 
-            {/* 5. PHOTO UPLOAD WITH DRAG-AND-DROP & VALIDATIONS */}
+            
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
@@ -418,7 +417,7 @@ export default function ReportPage() {
                 </span>
               </div>
 
-              {/* Upload Dropzone */}
+              
               {!photoData ? (
                 <div
                   onDragOver={handleDragOver}
@@ -451,7 +450,7 @@ export default function ReportPage() {
                   </div>
                 </div>
               ) : (
-                /* Photo Preview Card */
+                
                 <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-3">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 min-w-0">
@@ -498,7 +497,7 @@ export default function ReportPage() {
                 </div>
               )}
 
-              {/* Validation Error Message */}
+              
               {photoError && (
                 <div className="mt-2 p-2.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-bold flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />
@@ -506,7 +505,7 @@ export default function ReportPage() {
                 </div>
               )}
 
-              {/* Quick sample photo tester for evaluation */}
+              
               <div className="mt-3 flex items-center gap-2 flex-wrap">
                 <span className="text-[11px] font-bold text-slate-500">Quick Test Samples:</span>
                 {SAMPLE_PHOTOS.map((sample, idx) => (
@@ -522,7 +521,7 @@ export default function ReportPage() {
               </div>
             </div>
 
-            {/* 6. Exact Location / Landmark */}
+            
             <div>
               <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
                 6. Specific Location / Door / Floor <span className="text-slate-400 font-normal lowercase">(optional)</span>
@@ -536,7 +535,7 @@ export default function ReportPage() {
               />
             </div>
 
-            {/* 7. Reporter Identity Attribution */}
+            
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">

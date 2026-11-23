@@ -1,5 +1,3 @@
-// Client-side authentication and Google OAuth provider for Stride LPU
-
 const AUTH_STORAGE_KEY = "stride_user_session_v1"
 
 export const defaultUser = {
@@ -109,4 +107,3 @@ export function updateProfile(updates) {
   window.dispatchEvent(new CustomEvent("stride:auth_state_changed", { detail: updated }))
   return updated
 }
-

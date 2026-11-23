@@ -1,13 +1,6 @@
-/**
- * @module CampusMap
- * @author Kartik Grewal (Reg. No. 12406604) — Geospatial & Campus Mapping Lead
- * @subsystem Geospatial Graph & Network Map Subsystem
- * @description Interactive 2D vector SVG campus map canvas with coordinate scaling, pan/zoom, and route highlighting.
- */
-
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { buildings, routes } from "@/lib/campusData"
 import { ShieldCheck, AlertTriangle, Layers, Navigation, ZoomIn, ZoomOut, RotateCcw, Satellite, MapPin } from "lucide-react"
 
@@ -16,12 +9,12 @@ export default function CampusMap({ selectedBuilding, onBuildingSelect, highligh
   const [filterType, setFilterType] = useState("all")
   const [mapMode, setMapMode] = useState("network")
 
-  const isOnPath = (buildingId) => {
+  const isOnPath = useCallback((buildingId) => {
     if (!highlightedPath || !highlightedPath.path) return false
     return highlightedPath.path.includes(buildingId)
-  }
+  }, [highlightedPath])
 
-  const isRouteOnPath = (fromId, toId) => {
+  const isRouteOnPath = useCallback((fromId, toId) => {
     if (!highlightedPath || !highlightedPath.path) return false
     const path = highlightedPath.path
     for (let i = 0; i < path.length - 1; i++) {
@@ -31,13 +24,14 @@ export default function CampusMap({ selectedBuilding, onBuildingSelect, highligh
       }
     }
     return false
-  }
+  }, [highlightedPath])
 
-  const hovered = hoveredBuilding
-    ? buildings.find(b => b.id === hoveredBuilding)
-    : null
+  const hovered = useMemo(() => {
+    if (!hoveredBuilding) return null
+    return buildings.find(b => b.id === hoveredBuilding) || null
+  }, [hoveredBuilding])
 
-  const getBuildingLabel = (b) => {
+  const getBuildingLabel = useCallback((b) => {
     if (b.id.startsWith("block-")) return `B${b.id.replace("block-", "")}`
     if (b.id.startsWith("bh-")) return b.id.toUpperCase()
     if (b.id.startsWith("gh-")) return b.id.toUpperCase()
@@ -58,214 +52,193 @@ export default function CampusMap({ selectedBuilding, onBuildingSelect, highligh
     if (b.id === "shuttle-terminal") return "E-BUS"
     if (b.id === "faculty-apt-a") return "FAC"
     return b.shortName.substring(0, 4).toUpperCase()
-  }
-
-  const filteredBuildings = filterType === "all"
-    ? buildings
-    : buildings.filter(b => b.type === filterType)
+  }, [])
 
   return (
-    <div className="relative w-full rounded-3xl overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl select-none flex flex-col">
-      <div className="p-4 bg-slate-950/80 border-b border-slate-800/80 flex flex-wrap items-center justify-between gap-3 z-10">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-white text-xs font-bold tracking-wide">
-              Lovely Professional University (LPU)
-            </span>
-          </div>
-
-          <div className="flex bg-slate-800/90 p-0.5 rounded-xl border border-slate-700/80 text-[11px] font-bold">
-            <button
-              onClick={() => setMapMode("network")}
-              className={`px-2.5 py-1 rounded-lg transition-all ${
-                mapMode === "network"
-                  ? "bg-violet-600 text-white shadow-xs"
-                  : "text-slate-400 hover:text-white"
-              }`}
-            >
-              52 Blocks
-            </button>
-            <button
-              onClick={() => setMapMode("satellite")}
-              className={`px-2.5 py-1 rounded-lg flex items-center gap-1 transition-all ${
-                mapMode === "satellite"
-                  ? "bg-teal-600 text-white shadow-xs"
-                  : "text-slate-400 hover:text-white"
-              }`}
-            >
-              <Satellite className="w-3 h-3" />
-              <span>Google Satellite</span>
-            </button>
-          </div>
+    <div className="relative w-full rounded-3xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-xl">
+      <div className="absolute top-4 left-4 z-20 flex flex-wrap items-center gap-2">
+        <div className="px-3 py-1.5 rounded-xl bg-slate-900/80 backdrop-blur-md border border-slate-700/80 text-white text-xs font-bold flex items-center gap-2">
+          <Navigation className="w-3.5 h-3.5 text-violet-400" />
+          <span>Interactive Campus Canvas</span>
         </div>
 
-        {mapMode === "network" && (
-          <div className="flex items-center gap-1.5 overflow-x-auto text-xs">
-            {[
-              { id: "all", label: "All Facilities" },
-              { id: "academic", label: "Academic Blocks" },
-              { id: "residential", label: "Hostels (BH/GH)" },
-              { id: "dining", label: "Food & Mall" },
-              { id: "medical", label: "Hospital" },
-            ].map(f => (
-              <button
-                key={f.id}
-                onClick={() => setFilterType(f.id)}
-                className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all whitespace-nowrap ${
-                  filterType === f.id
-                    ? "bg-violet-600 text-white shadow-xs"
-                    : "bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700"
-                }`}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
-        )}
+        <div className="bg-slate-900/80 backdrop-blur-md border border-slate-700/80 p-1 rounded-xl flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => setMapMode("network")}
+            className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+              mapMode === "network" ? "bg-violet-600 text-white shadow-xs" : "text-slate-400 hover:text-white"
+            }`}
+          >
+            Network View
+          </button>
+          <button
+            type="button"
+            onClick={() => setMapMode("blueprint")}
+            className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+              mapMode === "blueprint" ? "bg-teal-600 text-white shadow-xs" : "text-slate-400 hover:text-white"
+            }`}
+          >
+            Blueprint Grid
+          </button>
+        </div>
       </div>
 
-      <div className="w-full aspect-[16/10] sm:aspect-[16/9] relative bg-[#070D1F]">
-        {mapMode === "satellite" ? (
-          <div className="w-full h-full relative">
-            <iframe
-              src="https://maps.google.com/maps?q=Lovely%20Professional%20University%2C%20Phagwara&t=k&z=17&ie=UTF8&iwloc=&output=embed"
-              className="w-full h-full border-0"
-              title="LPU Google Satellite Map"
-              loading="lazy"
-            />
-            <div className="absolute top-3 left-3 z-10 px-3 py-1.5 rounded-xl bg-slate-950/90 backdrop-blur-md border border-slate-700 text-white text-[11px] shadow-lg flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
-              <span>Real Google Satellite View • LPU Phagwara Campus</span>
-            </div>
-          </div>
-        ) : (
-          <>
-            <svg viewBox="0 0 102 82" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
+      <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/80 backdrop-blur-md border border-slate-700/80 text-slate-300 text-xs">
+          <span className="w-2 h-2 rounded-full bg-emerald-400" />
+          <span className="text-[11px] font-semibold">Accessible Corridor</span>
+          <span className="w-2 h-2 rounded-full bg-amber-400 ml-2" />
+          <span className="text-[11px] font-semibold">Steep / Steps</span>
+        </div>
+      </div>
+
+      <div className="w-full h-[520px] sm:h-[620px] relative bg-slate-950 overflow-hidden select-none">
+        <svg
+          viewBox="0 0 1000 650"
+          className="w-full h-full object-cover"
+          style={{
+            backgroundImage: mapMode === "blueprint"
+              ? "radial-gradient(circle, rgba(99,102,241,0.15) 1px, transparent 1px)"
+              : "radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)",
+            backgroundSize: "24px 24px"
+          }}
+        >
           <defs>
-            <pattern id="campusGrid" width="4" height="4" patternUnits="userSpaceOnUse">
-              <path d="M 4 0 L 0 0 0 4" fill="none" stroke="rgba(255, 255, 255, 0.03)" strokeWidth="0.15" />
-            </pattern>
-            <filter id="routeGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="0.6" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <linearGradient id="activeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#38BDF8" />
-              <stop offset="50%" stopColor="#818CF8" />
-              <stop offset="100%" stopColor="#34D399" />
+            <linearGradient id="activeRouteGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#8b5cf6" />
+              <stop offset="100%" stopColor="#06b6d4" />
             </linearGradient>
+            <filter id="glowEffect" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
           </defs>
 
-          <rect width="102" height="82" fill="#070D1F" />
-          <rect width="102" height="82" fill="url(#campusGrid)" />
+          {routes.map((r, idx) => {
+            const b1 = buildings.find(b => b.id === r.from)
+            const b2 = buildings.find(b => b.id === r.to)
+            if (!b1 || !b2) return null
 
-          <rect x="49" y="1" width="2" height="80" fill="rgba(255, 255, 255, 0.02)" rx="1" />
-          <rect x="1" y="39" width="100" height="2" fill="rgba(255, 255, 255, 0.02)" rx="1" />
+            const onActive = isRouteOnPath(r.from, r.to)
+            let strokeColor = r.accessible ? "#10b981" : "#f59e0b"
+            let strokeWidth = r.accessible ? 2.5 : 2
+            let strokeDash = r.accessible ? "none" : "4 4"
+            let opacity = 0.35
 
-          {routes.map((route, idx) => {
-            const fromB = buildings.find(b => b.id === route.from)
-            const toB = buildings.find(b => b.id === route.to)
-            if (!fromB || !toB) return null
-
-            const onPath = isRouteOnPath(route.from, route.to)
+            if (onActive) {
+              strokeColor = "#8b5cf6"
+              strokeWidth = 6
+              strokeDash = "none"
+              opacity = 1
+            }
 
             return (
-              <g key={idx}>
-                {onPath && (
+              <g key={`route-${idx}`}>
+                {onActive && (
                   <line
-                    x1={fromB.coordinates.x}
-                    y1={fromB.coordinates.y}
-                    x2={toB.coordinates.x}
-                    y2={toB.coordinates.y}
-                    stroke="url(#activeGrad)"
-                    strokeWidth="1.6"
+                    x1={b1.coordinates.x * 9.5 + 25}
+                    y1={b1.coordinates.y * 6.0 + 25}
+                    x2={b2.coordinates.x * 9.5 + 25}
+                    y2={b2.coordinates.y * 6.0 + 25}
+                    stroke="url(#activeRouteGlow)"
+                    strokeWidth="10"
                     strokeLinecap="round"
-                    filter="url(#routeGlow)"
+                    opacity="0.6"
+                    filter="url(#glowEffect)"
                   />
                 )}
                 <line
-                  x1={fromB.coordinates.x}
-                  y1={fromB.coordinates.y}
-                  x2={toB.coordinates.x}
-                  y2={toB.coordinates.y}
-                  stroke={
-                    onPath
-                      ? "#FFFFFF"
-                      : route.accessible
-                      ? "#10B981"
-                      : "#EF4444"
-                  }
-                  strokeWidth={onPath ? "1.0" : "0.35"}
-                  strokeDasharray={route.accessible ? "none" : "0.8, 0.6"}
-                  strokeOpacity={onPath ? "0.95" : "0.3"}
-                  className="transition-all duration-300"
+                  x1={b1.coordinates.x * 9.5 + 25}
+                  y1={b1.coordinates.y * 6.0 + 25}
+                  x2={b2.coordinates.x * 9.5 + 25}
+                  y2={b2.coordinates.y * 6.0 + 25}
+                  stroke={strokeColor}
+                  strokeWidth={strokeWidth}
+                  strokeDasharray={strokeDash}
+                  strokeLinecap="round"
+                  opacity={opacity}
                 />
               </g>
             )
           })}
 
-          {buildings.map(building => {
-            const isSelected = selectedBuilding === building.id
-            const isHovered = hoveredBuilding === building.id
-            const onPath = isOnPath(building.id)
-            const active = isSelected || isHovered || onPath
+          {buildings.map((b) => {
+            const cx = b.coordinates.x * 9.5 + 25
+            const cy = b.coordinates.y * 6.0 + 25
+            const isSelected = selectedBuilding === b.id
+            const isHovered = hoveredBuilding === b.id
+            const onActivePath = isOnPath(b.id)
+            const label = getBuildingLabel(b)
 
-            const matchesFilter = filterType === "all" || building.type === filterType
-            const opacity = matchesFilter ? (active ? 1 : 0.85) : 0.25
+            let fillColor = "#1e293b"
+            let strokeColor = "#475569"
+            let ringColor = "#6366f1"
+            let radius = 13
 
-            const score = building.accessibility.score
-            let scoreColor = "#10B981"
-            if (score < 60) scoreColor = "#EF4444"
-            else if (score < 80) scoreColor = "#F59E0B"
+            if (b.type === "academic") {
+              fillColor = "#312e81"
+              strokeColor = "#6366f1"
+            } else if (b.type === "residential") {
+              fillColor = "#064e3b"
+              strokeColor = "#10b981"
+            } else if (b.type === "amenity" || b.type === "sports") {
+              fillColor = "#831843"
+              strokeColor = "#ec4899"
+            }
 
-            const label = getBuildingLabel(building)
+            if (onActivePath) {
+              strokeColor = "#06b6d4"
+              fillColor = "#0e7490"
+              radius = 16
+            }
+
+            if (isSelected) {
+              strokeColor = "#ffffff"
+              fillColor = "#7c3aed"
+              radius = 18
+            }
 
             return (
               <g
-                key={building.id}
-                transform={`translate(${building.coordinates.x}, ${building.coordinates.y})`}
-                className="cursor-pointer transition-all duration-200"
-                opacity={opacity}
-                onClick={() => onBuildingSelect && onBuildingSelect(building.id)}
-                onMouseEnter={() => setHoveredBuilding(building.id)}
+                key={b.id}
+                className="cursor-pointer transition-transform"
+                onClick={() => onBuildingSelect && onBuildingSelect(b.id)}
+                onMouseEnter={() => setHoveredBuilding(b.id)}
                 onMouseLeave={() => setHoveredBuilding(null)}
               >
-                {active && (
+                {(isSelected || isHovered || onActivePath) && (
                   <circle
-                    cx="0"
-                    cy="0"
-                    r="4.2"
+                    cx={cx}
+                    cy={cy}
+                    r={radius + 7}
                     fill="none"
-                    stroke={isSelected ? "#A78BFA" : onPath ? "#34D399" : "#FFFFFF"}
-                    strokeWidth="0.4"
-                    filter="url(#routeGlow)"
+                    stroke={isSelected ? "#a855f7" : onActivePath ? "#22d3ee" : "#94a3b8"}
+                    strokeWidth="2"
+                    strokeDasharray={isSelected ? "none" : "3 3"}
+                    className="animate-pulse"
                   />
                 )}
 
-                <rect
-                  x="-3"
-                  y="-2.2"
-                  width="6"
-                  height="4.4"
-                  rx="1"
-                  fill={isSelected ? "#5B21B6" : onPath ? "#064E3B" : "#1E293B"}
-                  stroke={isSelected ? "#C4B5FD" : onPath ? "#34D399" : scoreColor}
-                  strokeWidth={active ? "0.6" : "0.25"}
-                  filter={active ? "url(#routeGlow)" : "none"}
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={radius}
+                  fill={fillColor}
+                  stroke={strokeColor}
+                  strokeWidth={isSelected ? 3 : 2}
+                  className="transition-all duration-200"
                 />
 
                 <text
-                  x="0"
-                  y="0.7"
+                  x={cx}
+                  y={cy + 3.5}
                   textAnchor="middle"
-                  fontSize="1.6"
-                  fontWeight="bold"
-                  fill="#FFFFFF"
-                  className="pointer-events-none select-none tracking-tight"
+                  fill="#ffffff"
+                  fontSize="8.5"
+                  fontWeight="900"
+                  fontFamily="Inter, sans-serif"
+                  className="pointer-events-none select-none"
                 >
                   {label}
                 </text>
@@ -275,68 +248,39 @@ export default function CampusMap({ selectedBuilding, onBuildingSelect, highligh
         </svg>
 
         {hovered && (
-          <div
-            className="absolute z-30 pointer-events-none transition-all duration-150"
-            style={{
-              left: `${hovered.coordinates.x}%`,
-              top: `${hovered.coordinates.y - 3}%`,
-              transform: "translate(-50%, -100%)"
-            }}
-          >
-            <div className="bg-slate-900/95 backdrop-blur-md rounded-2xl p-3 border border-slate-700 shadow-2xl text-left min-w-[210px]">
-              <div className="flex items-center justify-between gap-2 mb-1">
-                <span className="text-xs font-bold text-white truncate max-w-[140px]">{hovered.name}</span>
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-                  hovered.accessibility.score >= 80
-                    ? "bg-emerald-500/20 text-emerald-300"
-                    : hovered.accessibility.score >= 60
-                    ? "bg-amber-500/20 text-amber-300"
-                    : "bg-red-500/20 text-red-300"
-                }`}>
-                  {hovered.accessibility.score}/100
-                </span>
-              </div>
-              <div className="flex items-center gap-2 text-[10px] text-slate-400 mb-2">
-                <span>{hovered.floors} Floors</span>
-                <span>•</span>
-                <span className="capitalize">{hovered.type}</span>
-              </div>
-              <div className="flex flex-wrap items-center gap-1 text-[10px]">
-                {hovered.accessibility.elevator && (
-                  <span className={`px-1.5 py-0.5 rounded ${hovered.accessibility.elevatorWorking ? "bg-emerald-950 text-emerald-400" : "bg-red-950 text-red-400"}`}>
-                    {hovered.accessibility.elevatorWorking ? "Lift OK" : "Lift Broken"}
-                  </span>
-                )}
-                {hovered.accessibility.ramp && (
-                  <span className="px-1.5 py-0.5 rounded bg-violet-950 text-violet-300">
-                    Ramp ✓
-                  </span>
-                )}
-                {hovered.accessibility.accessibleWashroom && (
-                  <span className="px-1.5 py-0.5 rounded bg-teal-950 text-teal-300">
-                    Accessible Washroom ✓
-                  </span>
-                )}
-              </div>
+          <div className="absolute bottom-4 left-4 z-30 max-w-xs bg-slate-900/95 backdrop-blur-md p-3.5 rounded-2xl border border-slate-700/80 shadow-2xl text-white pointer-events-none transition-all">
+            <div className="flex items-center justify-between gap-2 mb-1">
+              <span className="text-xs font-black text-violet-300">{hovered.name}</span>
+              <span className={`px-2 py-0.5 rounded text-[10px] font-extrabold ${
+                hovered.accessibility.score >= 80 ? "bg-emerald-500/20 text-emerald-400" : "bg-amber-500/20 text-amber-400"
+              }`}>
+                {hovered.accessibility.score}% Access
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-300 line-clamp-2 leading-relaxed">
+              {hovered.description}
+            </p>
+            <div className="mt-2 pt-2 border-t border-slate-800 flex items-center justify-between text-[10px] text-slate-400">
+              <span>Ramp: {hovered.accessibility.ramp ? "✓ Verified" : "✗ Missing"}</span>
+              <span>Lift: {hovered.accessibility.elevator ? "✓ 2 Operational" : "✗ None"}</span>
             </div>
           </div>
         )}
-          </>
-        )}
-      </div>
 
-      <div className="p-3 bg-slate-950/90 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400 px-5">
-        <div className="flex items-center gap-5">
+        <div className="absolute bottom-4 right-4 z-20 flex flex-col items-end gap-1 text-[11px] font-semibold text-slate-400 bg-slate-900/80 backdrop-blur-md p-2.5 rounded-xl border border-slate-800">
           <div className="flex items-center gap-1.5">
-            <span className="w-3.5 h-1 bg-emerald-400 rounded-full inline-block" />
-            <span className="text-slate-300 font-medium">Step-Free Accessible Path</span>
+            <span className="w-2 h-2 rounded-full bg-violet-500" />
+            <span>Academic Towers</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3.5 h-1 border-t-2 border-dashed border-red-500 inline-block" />
-            <span className="text-slate-300 font-medium">Obstacle / Step / Kerb Present</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span>Residential Hostels</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-pink-500" />
+            <span>Amenities & Sports</span>
           </div>
         </div>
-        <span className="text-[11px] text-slate-400 italic">Click any facility node to inspect barrier audit</span>
       </div>
     </div>
   )

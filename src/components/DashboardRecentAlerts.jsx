@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { getStoredReports } from "@/lib/reportsStorage"
 import { ShieldAlert, Camera, MapPin, ZoomIn, X, ArrowRight } from "lucide-react"
 import { timeAgo } from "@/lib/utils"
@@ -17,6 +17,15 @@ export default function DashboardRecentAlerts() {
     load()
     window.addEventListener("stride:report_added", load)
     return () => window.removeEventListener("stride:report_added", load)
+  }, [])
+
+  const openLightbox = useCallback((photoUrl, title) => {
+    if (!photoUrl) return
+    setLightbox({ url: photoUrl, title })
+  }, [])
+
+  const closeLightbox = useCallback(() => {
+    setLightbox(null)
   }, [])
 
   if (reports.length === 0) return null
@@ -58,42 +67,45 @@ export default function DashboardRecentAlerts() {
                   <span className="truncate">{r.buildingName}</span>
                 </span>
                 <span className={`px-2 py-0.5 rounded text-[9px] font-extrabold uppercase shrink-0 ${
-                  r.severity === "high" || r.severity === "critical"
-                    ? "bg-red-100 text-red-700"
-                    : "bg-amber-100 text-amber-700"
+                  r.severity === "high"
+                    ? "bg-rose-100 text-rose-700 border border-rose-200"
+                    : "bg-amber-100 text-amber-700 border border-amber-200"
                 }`}>
                   {r.severity}
                 </span>
               </div>
 
+              <div>
+                <h4 className="text-xs font-black text-slate-900 line-clamp-1">{r.barrierLabel}</h4>
+                <p className="text-[11px] text-slate-600 mt-1 line-clamp-2 leading-relaxed">
+                  {r.description}
+                </p>
+              </div>
+
               {r.photo && (
                 <div
-                  onClick={() => setLightbox(r.photo)}
-                  className="w-full aspect-[16/10] rounded-xl overflow-hidden bg-slate-900 border border-slate-200 relative group cursor-pointer"
+                  onClick={() => openLightbox(r.photo, `${r.buildingName} — ${r.barrierLabel}`)}
+                  className="relative group rounded-xl overflow-hidden border border-slate-200 bg-slate-900 cursor-pointer h-28"
                 >
                   <img
                     src={r.photo}
                     alt={r.barrierLabel}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-bold gap-1">
-                    <ZoomIn className="w-3.5 h-3.5" /> Inspect Proof
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ZoomIn className="w-5 h-5 text-white" />
                   </div>
-                  <div className="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded bg-black/75 text-white text-[9px] font-bold flex items-center gap-1">
-                    <Camera className="w-2.5 h-2.5" /> Verified
-                  </div>
+                  <span className="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/75 text-[9px] font-bold text-white flex items-center gap-1">
+                    <Camera className="w-3 h-3 text-violet-400" />
+                    <span>Proof Attached</span>
+                  </span>
                 </div>
               )}
-
-              <div className="text-xs font-bold text-slate-900">{r.barrierLabel}</div>
-              <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
-                "{r.description}"
-              </p>
             </div>
 
-            <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px] text-slate-400">
-              <span>{r.author}</span>
-              <span>{timeAgo(r.timestamp)}</span>
+            <div className="pt-2 border-t border-slate-200/80 flex items-center justify-between text-[10px] text-slate-400">
+              <span className="truncate font-medium">{r.author}</span>
+              <span className="shrink-0">{timeAgo(r.timestamp)}</span>
             </div>
           </div>
         ))}
@@ -102,25 +114,28 @@ export default function DashboardRecentAlerts() {
       {lightbox && (
         <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4"
-          onClick={() => setLightbox(null)}
+          onClick={closeLightbox}
         >
           <div
             className="relative max-w-3xl w-full bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl"
             onClick={e => e.stopPropagation()}
           >
             <div className="p-4 bg-slate-950 flex items-center justify-between text-white border-b border-slate-800">
-              <span className="text-xs font-bold">Field Photographic Proof</span>
+              <div>
+                <span className="text-xs font-bold text-slate-100 block">{lightbox.title}</span>
+                <span className="text-[10px] text-slate-400">Photographic Evidence uploaded by student</span>
+              </div>
               <button
-                onClick={() => setLightbox(null)}
-                className="w-7 h-7 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center"
+                onClick={closeLightbox}
+                className="w-7 h-7 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
             <div className="p-2 flex items-center justify-center bg-black">
               <img
-                src={lightbox}
-                alt="Enlarged photo"
+                src={lightbox.url}
+                alt="Obstacle full resolution proof"
                 className="max-h-[70vh] w-auto max-w-full object-contain rounded-lg"
               />
             </div>

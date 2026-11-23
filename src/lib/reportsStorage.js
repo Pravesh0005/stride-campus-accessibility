@@ -1,10 +1,3 @@
-/**
- * @module ReportsStorageBus
- * @author Konatala Naveen (Reg. No. 12417251) — Full-Stack Audit & Community Lead
- * @subsystem Institutional Audit & Community Subsystem
- * @description Client-side persistent storage and reactive event bus for crowdsourced campus barrier reports.
- */
-
 const STORAGE_KEY = "stride_campus_reports_v2"
 
 export const defaultReports = [
@@ -101,7 +94,6 @@ export function getStoredReports() {
     const parsed = JSON.parse(raw)
     return Array.isArray(parsed) && parsed.length > 0 ? parsed : defaultReports
   } catch (err) {
-    console.error("Failed to read stored reports:", err)
     return defaultReports
   }
 }
@@ -112,11 +104,9 @@ export function saveReport(reportData) {
     const current = getStoredReports()
     const updated = [reportData, ...current]
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
-    // Broadcast event for active tabs/components
     window.dispatchEvent(new CustomEvent("stride:report_added", { detail: reportData }))
     return reportData
   } catch (err) {
-    console.error("Failed to save report to storage:", err)
     return reportData
   }
 }
@@ -126,4 +116,3 @@ export function getReportsForBuilding(buildingId) {
   if (!buildingId) return all
   return all.filter(r => r.buildingId === buildingId)
 }
-
